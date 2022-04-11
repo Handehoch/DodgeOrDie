@@ -5,13 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace WindowsFormsApp1.Models
+namespace DodgeOrDie.Models
 {
     internal class Character
     {
         public int X { get; private set; }
         public int Y { get; private set; }
         public int Speed { get; private set; }
+        public bool GoLeft { get; internal set; } = false;
+        public bool GoRight { get; internal set; } = false;
+        public bool GoUp { get; internal set; } = false;
+        public bool GoDown { get; internal set; } = false;
 
         public readonly Image Sprite;
         public readonly int Size = 32;
@@ -26,12 +30,11 @@ namespace WindowsFormsApp1.Models
         {
             X = x / 2;
             Y = y / 2;
-            Speed = (x + y) / 200;
+            Speed = (x + y) / 300;
         }
 
         public void Move(double dx, double dy)
         {
-            //if (dx == double.NaN || dy == double.NaN) return;
             X += (int)dx * Speed;
             Y += (int)dy * Speed;
         }

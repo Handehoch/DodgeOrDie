@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Movement.cs" />
+    <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Views\GameForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,7 +90,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
-    <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Sprites\redHeart.png" />

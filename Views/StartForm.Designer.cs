@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1.Views
+﻿namespace DodgeOrDie.Views
 {
     partial class StartForm
     {
