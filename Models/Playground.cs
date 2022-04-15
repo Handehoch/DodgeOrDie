@@ -9,27 +9,28 @@ using DodgeOrDie.Entities;
 
 namespace DodgeOrDie.Models
 {
-    internal class Playground
+    internal class Playground: IScreenDetail
     {
-        public Character Character { get; private set; }
-        public Pen Pen { get; private set; }
-        public Size Size { get; private set; }
-        public Point StartPos { get; private set; }
+        //Все сеттеры должны быть private, но c# 7.3 не позволяет
+        public Character Character { get; set; }
+        public Pen Pen { get; set; }
+        public Size Size { get; set; }
+        public Point StartPos { get; set; }
         public Point EndPos
         {
             get => new Point(StartPos.X + Size.Width, StartPos.Y + Size.Height);
         }
-        public Rectangle Rectangle { get; private set; }
+        public Rectangle Rectangle { get; set; }
 
         private const double Scale = 0.6;
         public Playground(Pen pen, int width, int height)
         {
             Pen = pen;
             Character = new Character(width, height);
-            Update(width, height);
+            Update(width, height, 0, 0);
         }
 
-        internal void Update(int width, int height)
+        public void Update(int width, int height, int x, int y)
         {
             Size = new Size((int)(Scale * width), (int)(Scale * height));
             StartPos = new Point((width - Size.Width) / 2, (height - Size.Height) / 2);

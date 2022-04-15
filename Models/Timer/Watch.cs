@@ -5,20 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Drawing;
+using DodgeOrDie.Entities;
 
 namespace DodgeOrDie.Models.Timer
 {
     //нормально ли такое наследование, если GameTimer отвечает не только за измерение времени, но и отображение его на экране
-    internal class Watch: Stopwatch 
+    internal class Watch: Stopwatch, IScreenDetail
     {
-        public Pen Pen { get; private set; }
-        public Size Size { get; private set; }
-        public Point StartPos { get; private set; }
+        public Pen Pen { get; set; }
+        public Size Size { get; set; }
+        public Point StartPos { get; set; }
         public Point EndPos 
         { 
             get => new Point(StartPos.X + Size.Width, StartPos.Y + Size.Height); 
         }
-        public Rectangle Rectangle { get; private set; }
+        public Rectangle Rectangle { get; set; }
         public Font Font { get; private set; }
         public Time Time { get; private set; }
 
@@ -29,7 +30,7 @@ namespace DodgeOrDie.Models.Timer
             Update(width, height, x, y);
         }
 
-        internal void Update(int width, int height, int x, int y)
+        public void Update(int width, int height, int x, int y)
         {
             Size = new Size((int)(width * 0.15), (int)(height * 0.10));
             StartPos = new Point(x - Size.Width , y - Size.Height);

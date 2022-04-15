@@ -9,12 +9,11 @@ namespace DodgeOrDie.Entities
 {
     public interface IScreenDetail
     {
-        Pen Pen { get; set; }
         Size Size { get; set; }
         Point StartPos { get; set; }
         Point EndPos { get; }
         Rectangle Rectangle { get; set; }
 
-        void Update();
+        void Update(int width, int height, int x, int y);
     }
 }
