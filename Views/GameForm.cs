@@ -18,7 +18,7 @@ namespace DodgeOrDie
         {
             InitializeComponent();
             ClientSize = new Size(1366, 768);
-            _game = new Game(new Playground(new Pen(Color.White, 5f), ClientSize.Width, ClientSize.Height));
+            _game = new Game(new Pen(Color.White, 5f), ClientSize.Width, ClientSize.Height);
             _gameLoop = new Timer() { Interval = 30 };
             _gameLoop.Tick += Update;
             _gameLoop.Start();
@@ -29,30 +29,40 @@ namespace DodgeOrDie
             base.OnLoad(e);
             DoubleBuffered = true;
             BackColor = Color.Black;
-            //WindowState = FormWindowState.Maximized;
+            _game.Start();
             KeyDown += Movement.AddKey;
             KeyUp += Movement.RemoveKey;
+            KeyDown += (s, args) =>
+            {
+                if(args.KeyCode == Keys.Escape && _game.IsPlaying) _game.Stop();
+                else if(args.KeyCode == Keys.Escape && !_game.IsPlaying) _game.Start();
+            };
         }
 
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            if(_game != null) _game.Playground.Update(ClientSize.Width, ClientSize.Height);
+            if(_game != null) _game.Update(ClientSize.Width, ClientSize.Height);
         }
 
         public void Update(object sender, EventArgs e)
         {
-            var direction = Movement.GetDirection(_game.Playground.Character);
-            _game.Playground.TryMove();
-            _game.Playground.Character.Move(direction.X, direction.Y);
-
+            base.Update();
             Invalidate();
+
+            _game.Playground.TryMove();
+            var direction = Movement.GetDirection(_game.Playground.Character);
+            if(_game.IsPlaying) _game.Playground.Character.Move(direction.X, direction.Y);
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            base.OnPaint(e);
             e.Graphics.DrawRectangle(_game.Playground.Pen, _game.Playground.Rectangle);
             e.Graphics.DrawImage(_game.Playground.Character.Sprite, _game.Playground.Character.X, _game.Playground.Character.Y);
+            e.Graphics.DrawRectangle(_game.Watch.Pen, _game.Watch.Rectangle);
+            e.Graphics.DrawString(_game.Watch.MeasureTime(), _game.Watch.Font, _game.Watch.Time.Brush, _game.Watch.Time.StartPos);
+            //_game.Update(ClientSize.Width, ClientSize.Height); //пришлось впихнуть сюда, посколько не работал правильный ресайзинг
         }
     }
 }

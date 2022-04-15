@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DodgeOrDie.Helpers;
+using DodgeOrDie.Entities;
 
 namespace DodgeOrDie.Models
 {
@@ -16,7 +17,7 @@ namespace DodgeOrDie.Models
         public Point StartPos { get; private set; }
         public Point EndPos
         {
-            get { return new Point(StartPos.X + Size.Width, StartPos.Y + Size.Height); }
+            get => new Point(StartPos.X + Size.Width, StartPos.Y + Size.Height);
         }
         public Rectangle Rectangle { get; private set; }
 
@@ -28,7 +29,7 @@ namespace DodgeOrDie.Models
             Update(width, height);
         }
 
-        public void Update(int width, int height)
+        internal void Update(int width, int height)
         {
             Size = new Size((int)(Scale * width), (int)(Scale * height));
             StartPos = new Point((width - Size.Width) / 2, (height - Size.Height) / 2);
