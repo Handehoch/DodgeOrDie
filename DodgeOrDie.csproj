@@ -47,9 +47,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\Movement.cs" />
+    <Compile Include="Controllers\CharacterMovement.cs" />
+    <Compile Include="Controllers\EnemyMovement.cs" />
+    <Compile Include="Entities\IEnemy.cs" />
     <Compile Include="Entities\IScreenDetail.cs" />
-    <Compile Include="Helpers\Extensions.cs" />
+    <Compile Include="Models\Enemies\RushingEnemy.cs" />
     <Compile Include="Models\Timer\Time.cs" />
     <Compile Include="Models\Timer\Watch.cs" />
     <Compile Include="Views\GameForm.cs">
@@ -97,6 +99,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Sprites\rushingEnemy.png" />
     <Content Include="Sprites\redHeart.png" />
     <Content Include="Sprites\start menu.png" />
   </ItemGroup>

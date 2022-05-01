@@ -31,8 +31,8 @@ namespace DodgeOrDie
             DoubleBuffered = true;
             BackColor = Color.Black;
             _game.Start();
-            KeyUp += Movement.RemoveKey;
-            KeyDown += Movement.AddKey;
+            KeyUp += CharacterMovement.RemoveKey;
+            KeyDown += CharacterMovement.AddKey;
             KeyDown += (s, args) =>
             {
                 if (args.KeyCode == Keys.Escape && _game.IsPlaying) _game.Stop();
@@ -52,7 +52,7 @@ namespace DodgeOrDie
             Invalidate();
 
             _game.Playground.TryMove();
-            var direction = Movement.GetDirection(_game.Playground.Character);
+            var direction = CharacterMovement.GetDirection(_game.Playground.Character);
             if(_game.IsPlaying) _game.Playground.Character.Move(direction.X, direction.Y);
         }
 

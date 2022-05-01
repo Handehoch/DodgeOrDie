@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DodgeOrDie.Helpers;
 using DodgeOrDie.Entities;
 
 namespace DodgeOrDie.Models
@@ -38,19 +37,12 @@ namespace DodgeOrDie.Models
             Character.Update(EndPos.X, EndPos.Y);
         }
 
-        public void TryMove(/*System.Windows.Vector direction*/)
+        public void TryMove()
         {
             Character.GoLeft = Character.X - 2 * Pen.Width > StartPos.X;
             Character.GoRight = Character.X + 2 * Pen.Width + Character.Size < EndPos.X;
             Character.GoUp = Character.Y - 2 * Pen.Width > StartPos.Y;
             Character.GoDown = Character.Y + 2 * Pen.Width + Character.Size < EndPos.Y;
-
-            //var newPosition = new PointF((float)(Character.X + direction.X), (float)(Character.Y + direction.Y));
-
-            //return newPosition.X.EqualsTo(StartPos.X, Pen.Width * 2)
-            //    || newPosition.X.EqualsTo(EndPos.X, Pen.Width * 2 + Character.Size)
-            //    || newPosition.Y.EqualsTo(StartPos.Y, Pen.Width * 2)
-            //    || newPosition.Y.EqualsTo(EndPos.Y, Pen.Width * 2 + Character.Size);
         }
 
         public override string ToString()

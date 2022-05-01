@@ -23,8 +23,10 @@ namespace DodgeOrDie.Views
             InitializeComponent();
             _fc = new PrivateFontCollection();
             BackColor = Color.Black;
-            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MinimizeBox = false;
             MaximizeBox = false;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            StartPosition = FormStartPosition.CenterScreen;
             _fc.AddFontFile(@"C:\Users\boris\source\repos\DodgeOrDie\DodgeOrDie\Sprites\HalfBoldPixel7-2rw3.ttf");
             InitControls();
         }

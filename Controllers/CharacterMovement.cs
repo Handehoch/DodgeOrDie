@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DodgeOrDie.Controllers
 {
-    internal static class Movement
+    internal static class CharacterMovement
     {
         private static readonly List<Keys> _keys = new List<Keys>();
 
