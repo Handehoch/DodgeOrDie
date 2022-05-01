@@ -13,12 +13,13 @@ namespace DodgeOrDie
     {
         private readonly Game _game;
         private readonly Timer _gameLoop;
+        private readonly Size _size = new Size(1600, 900);
 
         public GameForm()
         {
+            _game = new Game(new Pen(Color.White, 5f), _size.Width, _size.Height);
             InitializeComponent();
-            ClientSize = new Size(1366, 768);
-            _game = new Game(new Pen(Color.White, 5f), ClientSize.Width, ClientSize.Height);
+            ClientSize = _size;
             _gameLoop = new Timer() { Interval = 30 };
             _gameLoop.Tick += Update;
             _gameLoop.Start();
@@ -30,19 +31,19 @@ namespace DodgeOrDie
             DoubleBuffered = true;
             BackColor = Color.Black;
             _game.Start();
-            KeyDown += Movement.AddKey;
             KeyUp += Movement.RemoveKey;
+            KeyDown += Movement.AddKey;
             KeyDown += (s, args) =>
             {
-                if(args.KeyCode == Keys.Escape && _game.IsPlaying) _game.Stop();
-                else if(args.KeyCode == Keys.Escape && !_game.IsPlaying) _game.Start();
+                if (args.KeyCode == Keys.Escape && _game.IsPlaying) _game.Stop();
+                else if (args.KeyCode == Keys.Escape && !_game.IsPlaying) _game.Start();
             };
         }
 
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            if(_game != null) _game.Update(ClientSize.Width, ClientSize.Height);
+            _game.Update(ClientSize.Width, ClientSize.Height);
         }
 
         public void Update(object sender, EventArgs e)
@@ -62,7 +63,6 @@ namespace DodgeOrDie
             e.Graphics.DrawImage(_game.Playground.Character.Sprite, _game.Playground.Character.X, _game.Playground.Character.Y);
             e.Graphics.DrawRectangle(_game.Watch.Pen, _game.Watch.Rectangle);
             e.Graphics.DrawString(_game.Watch.MeasureTime(), _game.Watch.Font, _game.Watch.Time.Brush, _game.Watch.Time.StartPos);
-            //_game.Update(ClientSize.Width, ClientSize.Height); //пришлось впихнуть сюда, посколько не работал правильный ресайзинг
         }
     }
 }

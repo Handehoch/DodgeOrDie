@@ -33,9 +33,6 @@ namespace DodgeOrDie.Models
             Watch.Stop();
         }
 
-        //костыль с реализацией интерфейса в классах Playground, Watch, Time
-        //метод апдейт должен быть у каждого объекта, реализующего IScreedDetail, но реализация немного отличается
-        //c# 7.3 не позволяет члены интерфейса помечать ключевым словом abstract
         public void Update(int width, int height)
         {
             Playground.Update(width, height, 0, 0);

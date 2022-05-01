@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Text;
 using DodgeOrDie.Entities;
 
 namespace DodgeOrDie.Models.Timer
@@ -23,10 +24,13 @@ namespace DodgeOrDie.Models.Timer
         public Font Font { get; private set; }
         public Time Time { get; private set; }
 
+        private readonly PrivateFontCollection _fc;
         public Watch(Pen pen, /*Font font,*/ int width, int height, int x, int y)
         {
             Pen = pen;
             Time = new Time(Size.Width, Size.Height, StartPos.X, StartPos.Y);
+            _fc = new PrivateFontCollection();
+            _fc.AddFontFile(@"C:\Users\boris\source\repos\DodgeOrDie\DodgeOrDie\Sprites\HalfBoldPixel7-2rw3.ttf");
             Update(width, height, x, y);
         }
 
@@ -35,7 +39,7 @@ namespace DodgeOrDie.Models.Timer
             Size = new Size((int)(width * 0.15), (int)(height * 0.10));
             StartPos = new Point(x - Size.Width , y - Size.Height);
             Rectangle = new Rectangle(StartPos, Size);
-            Font = new Font(FontFamily.GenericSansSerif, (width + height) / 100, FontStyle.Bold);
+            Font = new Font(_fc.Families[0], (width + height) / 100, FontStyle.Bold);
             Time.Update(Size.Width, Size.Height, StartPos.X, StartPos.Y);
         }
 
