@@ -11,18 +11,16 @@ using System.Windows.Forms;
 
 namespace DodgeOrDie.Views
 {
-    public partial class StartForm : Form
+    public partial class PauseForm : Form
     {
-        private GameForm _gameForm;
         private readonly PrivateFontCollection _fc;
-        private Button _startButton;
+        private Button _resumeButton;
         private Button _exitButton;
 
-        public StartForm()
+        public PauseForm()
         {
             _fc = new PrivateFontCollection();
             _fc.AddFontFile(@"C:\Users\boris\source\repos\DodgeOrDie\DodgeOrDie\Sprites\HalfBoldPixel7-2rw3.ttf");
-            //_titleFont = new Font(_fc.Families[0], (Width + Height) / 6);
             InitControls();
             BackColor = Color.Black;
             FormBorderStyle = FormBorderStyle.None;
@@ -30,7 +28,11 @@ namespace DodgeOrDie.Views
             WindowState = FormWindowState.Maximized;
             InitializeComponent();
             ClientSize = new Size(1920, 1080);
+
             Load += (s, e) => OnSizeChanged(EventArgs.Empty);
+            //KeyDown += (s, e) => {
+            //    if (e.KeyCode == Keys.Escape) _gameForm.BringToFront();
+            //};
         }
 
         public void InitControls()
@@ -41,17 +43,17 @@ namespace DodgeOrDie.Views
 
         public void InitStartButton()
         {
-            _startButton = new Button();
-            _startButton.Size = new Size(Width / 4, Height / 5);
-            _startButton.Location = new Point(Width / 4 - _startButton.Width / 2, Height / 2 - _startButton.Height / 2);
-            _startButton.Text = "Start Game";
-            _startButton.BackColor = Color.White;
-            _startButton.Font = new Font(_fc.Families[0], 24f);
-            _startButton.Click += (s, e) => {
-                _gameForm = new GameForm();
-                _gameForm.Show();
-            };
-            Controls.Add(_startButton);
+            _resumeButton = new Button();
+            _resumeButton.Size = new Size(Width / 4, Height / 5);
+            _resumeButton.Location = new Point(Width / 4 - _resumeButton.Width / 2, Height / 2 - _resumeButton.Height / 2);
+            _resumeButton.Text = "Resume";
+            _resumeButton.BackColor = Color.White;
+            _resumeButton.Font = new Font(_fc.Families[0], 24f);
+            //_resumeButton.Click += (s, e) => {
+            //    _gameForm.BringToFront();
+            //    //_gameForm.Game.Start();
+            //};
+            Controls.Add(_resumeButton);
         }
 
         public void InitSettingsButton()
@@ -64,23 +66,23 @@ namespace DodgeOrDie.Views
             _exitButton.BackColor = Color.White;
             _exitButton.Font = new Font(_fc.Families[0], 24f);
 
-            _exitButton.Click += (s, e) => {
-                this.Close();
-            };
+            //_exitButton.Click += (s, e) => {
+            //    _startForm.Close();
+            //};
             Controls.Add(_exitButton);
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            e.Graphics.DrawString("Dodge or Die", new Font(_fc.Families[0], (Width + Height) / 25), new SolidBrush(Color.IndianRed), new PointF(Width / 6, Height / 8));
+            e.Graphics.DrawString("Game Paused", new Font(_fc.Families[0], (Width + Height) / 25), new SolidBrush(Color.IndianRed), new PointF(Width / 6, Height / 8));
         }
 
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            _startButton.Location = new Point(Width / 4 - _startButton.Width / 2, Height / 2 - _startButton.Height / 2);
-            _startButton.Size = new Size(Width / 4, Height / 5);
+            _resumeButton.Location = new Point(Width / 4 - _resumeButton.Width / 2, Height / 2 - _resumeButton.Height / 2);
+            _resumeButton.Size = new Size(Width / 4, Height / 5);
             _exitButton.Location = new Point(Width / 2 + _exitButton.Width / 2, Height / 2 - _exitButton.Height / 2);
             _exitButton.Size = new Size(Width / 4, Height / 5);
         }

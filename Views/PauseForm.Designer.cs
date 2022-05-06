@@ -1,9 +1,10 @@
-﻿using System.Drawing;
-
-namespace DodgeOrDie
+﻿namespace DodgeOrDie.Views
 {
-    partial class GameForm
+    partial class PauseForm
     {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
@@ -18,6 +19,7 @@ namespace DodgeOrDie
             }
             base.Dispose(disposing);
         }
+
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -26,19 +28,12 @@ namespace DodgeOrDie
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // GameForm
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 600);
-            this.Name = "GameForm";
-            this.Text = "Form1";
-            this.ResumeLayout(false);
-
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Text = "PauseForm";
         }
+
         #endregion
     }
 }
-

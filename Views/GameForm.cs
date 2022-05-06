@@ -6,21 +6,24 @@ using System.Drawing;
 using System.Windows.Forms;
 using DodgeOrDie.Controllers;
 using DodgeOrDie.Models;
+using DodgeOrDie.Views;
 
 namespace DodgeOrDie
 {
     public partial class GameForm : Form
     {
-        private readonly Game _game;
+        internal readonly Game Game;
         private readonly Timer _gameLoop;
-        private readonly Size _size = new Size(1600, 900);
+        private readonly Size _size = new Size(1920, 1080);
 
         public GameForm()
         {
-            _game = new Game(new Pen(Color.White, 5f), _size.Width, _size.Height);
+            Game = new Game(new Pen(Color.White, 5f), _size.Width, _size.Height);
             InitializeComponent();
             ClientSize = _size;
-            _gameLoop = new Timer() { Interval = 30 };
+            FormBorderStyle = FormBorderStyle.None;
+            WindowState = FormWindowState.Maximized;
+            _gameLoop = new Timer() { Interval = 20 };
             _gameLoop.Tick += Update;
             _gameLoop.Start();
         }
@@ -30,20 +33,30 @@ namespace DodgeOrDie
             base.OnLoad(e);
             DoubleBuffered = true;
             BackColor = Color.Black;
-            _game.Start();
+            Game.Start();
             KeyUp += CharacterMovement.RemoveKey;
             KeyDown += CharacterMovement.AddKey;
             KeyDown += (s, args) =>
             {
-                if (args.KeyCode == Keys.Escape && _game.IsPlaying) _game.Stop();
-                else if (args.KeyCode == Keys.Escape && !_game.IsPlaying) _game.Start();
+                if (args.KeyCode == Keys.Escape && Game.IsPlaying)
+                {
+                    Game.Stop();
+                    //_pauseWindow = new PauseForm(_startForm, this);
+                    //_pauseWindow.Show();
+                }
+                else if (args.KeyCode == Keys.Escape && !Game.IsPlaying)
+                {
+                    //_pauseWindow.Close();
+                    Game.Start();
+                    //this.BringToFront();
+                }
             };
         }
 
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            _game.Update(ClientSize.Width, ClientSize.Height);
+            Game.Update(ClientSize.Width, ClientSize.Height);
         }
 
         public void Update(object sender, EventArgs e)
@@ -51,18 +64,18 @@ namespace DodgeOrDie
             base.Update();
             Invalidate();
 
-            _game.Playground.TryMove();
-            var direction = CharacterMovement.GetDirection(_game.Playground.Character);
-            if(_game.IsPlaying) _game.Playground.Character.Move(direction.X, direction.Y);
+            Game.Playground.TryMove();
+            var direction = CharacterMovement.GetDirection(Game.Playground.Character);
+            if(Game.IsPlaying) Game.Playground.Character.Move(direction.X, direction.Y);
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            e.Graphics.DrawRectangle(_game.Playground.Pen, _game.Playground.Rectangle);
-            e.Graphics.DrawImage(_game.Playground.Character.Sprite, _game.Playground.Character.X, _game.Playground.Character.Y);
-            e.Graphics.DrawRectangle(_game.Watch.Pen, _game.Watch.Rectangle);
-            e.Graphics.DrawString(_game.Watch.MeasureTime(), _game.Watch.Font, _game.Watch.Time.Brush, _game.Watch.Time.StartPos);
+            e.Graphics.DrawRectangle(Game.Playground.Pen, Game.Playground.Rectangle);
+            e.Graphics.DrawImage(Game.Playground.Character.Sprite, Game.Playground.Character.X, Game.Playground.Character.Y);
+            e.Graphics.DrawRectangle(Game.Watch.Pen, Game.Watch.Rectangle);
+            e.Graphics.DrawString(Game.Watch.MeasureTime(), Game.Watch.Font, Game.Watch.Time.Brush, Game.Watch.Time.StartPos);
         }
     }
 }
