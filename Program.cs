@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DodgeOrDie.Views;
+using DodgeOrDie.Controllers;
 
 namespace DodgeOrDie
 {
@@ -17,7 +18,13 @@ namespace DodgeOrDie
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new StartForm());
+
+            var startForm = new StartForm();
+            var gameForm = new GameForm();
+            var pauseForm = new PauseForm();
+
+            ScreenManager.InitWith(startForm, gameForm, pauseForm);
+            Application.Run(startForm);
         }
     }
 }

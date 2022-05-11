@@ -41,14 +41,12 @@ namespace DodgeOrDie
                 if (args.KeyCode == Keys.Escape && Game.IsPlaying)
                 {
                     Game.Stop();
-                    //_pauseWindow = new PauseForm(_startForm, this);
-                    //_pauseWindow.Show();
+                    ScreenManager.ShowPauseForm();
                 }
                 else if (args.KeyCode == Keys.Escape && !Game.IsPlaying)
                 {
-                    //_pauseWindow.Close();
                     Game.Start();
-                    //this.BringToFront();
+                    ScreenManager.ShowPauseForm();
                 }
             };
         }

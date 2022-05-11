@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing.Text;
 using System.Windows.Forms;
+using DodgeOrDie.Controllers;
 
 namespace DodgeOrDie.Views
 {
@@ -36,7 +37,7 @@ namespace DodgeOrDie.Views
         public void InitControls()
         {
             InitStartButton();
-            InitSettingsButton();
+            InitExitButton();
         }
 
         public void InitStartButton()
@@ -47,14 +48,11 @@ namespace DodgeOrDie.Views
             _startButton.Text = "Start Game";
             _startButton.BackColor = Color.White;
             _startButton.Font = new Font(_fc.Families[0], 24f);
-            _startButton.Click += (s, e) => {
-                _gameForm = new GameForm();
-                _gameForm.Show();
-            };
+            _startButton.Click += (s, e) => ScreenManager.CreateGame();
             Controls.Add(_startButton);
         }
 
-        public void InitSettingsButton()
+        public void InitExitButton()
         {
             _exitButton = new Button();
             _exitButton.Size = new Size(Width / 4, Height / 5);
@@ -64,9 +62,7 @@ namespace DodgeOrDie.Views
             _exitButton.BackColor = Color.White;
             _exitButton.Font = new Font(_fc.Families[0], 24f);
 
-            _exitButton.Click += (s, e) => {
-                this.Close();
-            };
+            _exitButton.Click += (s, e) => ScreenManager.CloseStartForm();
             Controls.Add(_exitButton);
         }
 
