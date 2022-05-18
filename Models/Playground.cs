@@ -10,7 +10,6 @@ namespace DodgeOrDie.Models
 {
     internal class Playground: IScreenDetail
     {
-        //Все сеттеры должны быть private, но c# 7.3 не позволяет
         public Character Character { get; set; }
         public Pen Pen { get; set; }
         public Size Size { get; set; }
@@ -37,7 +36,7 @@ namespace DodgeOrDie.Models
             Character.Update(EndPos.X, EndPos.Y);
         }
 
-        public void TryMove()
+        public void TryMoveCharacter()
         {
             Character.GoLeft = Character.X - 2 * Pen.Width > StartPos.X;
             Character.GoRight = Character.X + 2 * Pen.Width + Character.Size < EndPos.X;

@@ -11,9 +11,10 @@ namespace DodgeOrDie.Entities
     {
         int X { get; set; }
         int Y { get; set; }
-        int Speed { get; set; }
-        int Size { get; set; }
+        //Point Location { get; set; }
+        Size Size { get; set; }
         Image Sprite { get; set; }
-        void Move(int dx, int dy);
+        void Move(int speed);
+        void Appear(int x, int y);
     }
 }

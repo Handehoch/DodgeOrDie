@@ -14,7 +14,6 @@ namespace DodgeOrDie.Views
 {
     public partial class StartForm : Form
     {
-        private GameForm _gameForm;
         private readonly PrivateFontCollection _fc;
         private Button _startButton;
         private Button _exitButton;
