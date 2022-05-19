@@ -61,7 +61,7 @@ namespace DodgeOrDie.Views
             _exitButton.BackColor = Color.White;
             _exitButton.Font = new Font(_fc.Families[0], 24f);
 
-            _exitButton.Click += (s, e) => ScreenManager.CloseStartForm();
+            _exitButton.Click += (s, e) => ScreenManager.CloseGame();
             Controls.Add(_exitButton);
         }
 

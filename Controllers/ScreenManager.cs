@@ -21,7 +21,7 @@ namespace DodgeOrDie.Controllers
             _pauseForm = pauseForm;
         }
 
-        public static void CloseStartForm()
+        public static void CloseGame()
         {
             _startForm.Close();
         }
@@ -48,6 +48,11 @@ namespace DodgeOrDie.Controllers
         public static void ClosePauseForm()
         {
             _pauseForm.Close();
+        }
+
+        public static void CloseGameForm()
+        {
+            _gameForm?.Close();
         }
     }
 }

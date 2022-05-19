@@ -26,7 +26,7 @@ namespace DodgeOrDie
             WindowState = FormWindowState.Maximized;
             _enemySpawner = new Timer { Interval = GameScale.SpawnRate };
             _enemySpawner.Tick += SpawnEmeny;
-            _enemySpawner.Tick += KillEnemy;
+            //_enemySpawner.Tick += KillEnemy;
             _enemySpawner.Start();
             _gameLoop = new Timer() { Interval = 20 };
             _gameLoop.Tick += Update;
@@ -68,11 +68,17 @@ namespace DodgeOrDie
             Invalidate();
 
             Game.Playground.TryMoveCharacter();
-            var direction = CharacterMovement.GetDirection(Game.Playground.Character);
-            if(Game.IsPlaying) Game.Playground.Character.Move(direction.X, direction.Y);
 
-            Game.Enemies.ForEach(enemy => enemy.Move(GameScale.EnemySpeed));
+            var direction = CharacterMovement.GetDirection(Game.Playground.Character);
+            if (Game.IsPlaying)
+            {
+                Game.Playground.Character.Move(direction.X, direction.Y);
+                Game.Enemies.ForEach(enemy => enemy.Move(GameScale.EnemySpeed));
+            }
+
+            KillEnemy();
             IncreaseDifficulty();
+            CharacterGetDamaged();
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -95,7 +101,7 @@ namespace DodgeOrDie
             if (Math.Abs(time.TotalSeconds % 10) < 0.01)
             {
                 GameScale.Increase();
-                Game.IncreaseMaxEnemies(GameScale.MaxEnemies);
+                Game.IncreaseMaxEnemiesTo(GameScale.MaxEnemies);
                 _enemySpawner.Interval = GameScale.SpawnRate;
             }
         }
@@ -111,11 +117,32 @@ namespace DodgeOrDie
             Game.Enemies.Add(enemy);
         }
 
-        private void KillEnemy(object sender, EventArgs e)
+        private void KillEnemy(/*object sender, EventArgs e*/)
         {
             if (!Game.IsMaxEnemies) return;
 
-            Game.Enemies.RemoveAt(0);
+            foreach(var enemy in Game.Enemies.ToList())
+                if(!enemy.Location.IsInsideBounds(Width, Height))
+                    Game.Enemies.Remove(enemy);
         }
-    }
+
+        private void CharacterGetDamaged()
+        {
+            foreach(var enemy in Game.Enemies.ToList())
+            {
+                if (Game.Playground.Character.InteractsWith(enemy))
+                {
+                    Game.Playground.Character.GetDamage();
+                    Game.Enemies.Remove(enemy);
+                }
+            }
+
+            if(Game.Playground.Character.Health <= 0)
+            {
+                Game.Stop();
+                ScreenManager.CloseGameForm();
+                ScreenManager.ShowPauseForm();
+            }
+        }
+    }   
 }

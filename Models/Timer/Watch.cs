@@ -10,7 +10,6 @@ using DodgeOrDie.Entities;
 
 namespace DodgeOrDie.Models.Timer
 {
-    //нормально ли такое наследование, если GameTimer отвечает не только за измерение времени, но и отображение его на экране
     internal class Watch: Stopwatch, IScreenDetail
     {
         public Pen Pen { get; set; }

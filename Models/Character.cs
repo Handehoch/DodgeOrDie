@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Threading;
 
 namespace DodgeOrDie.Models
 {
@@ -16,6 +17,8 @@ namespace DodgeOrDie.Models
         public bool GoRight { get; internal set; } = false;
         public bool GoUp { get; internal set; } = false;
         public bool GoDown { get; internal set; } = false;
+        public bool GetDamaged { get; private set; } = false;
+        public int Health { get; private set; }
 
         public readonly Image Sprite;
         public readonly int Size = 32;
@@ -23,6 +26,7 @@ namespace DodgeOrDie.Models
         public Character(int x, int y)
         {
             Update(x, y);
+            Health = 3;
             Sprite = new Bitmap(@"C:\Users\boris\source\repos\DodgeOrDie\DodgeOrDie\Sprites\redHeart.png");
         }
 
@@ -38,5 +42,26 @@ namespace DodgeOrDie.Models
             X += (int)dx * Speed;
             Y += (int)dy * Speed;
         }
+
+        public void GetDamage()
+        {
+            Health--;
+            //EnableSaveFrames();
+            //await DisableSaveFramesAsync();
+        }
+
+        //private void EnableSaveFrames()
+        //{
+        //    GetDamaged = true;
+        //}
+
+        //private Task DisableSaveFramesAsync()
+        //{
+        //    return Task.Run(() =>
+        //    {
+        //        Thread.Sleep(5000);
+        //        GetDamaged = false;
+        //    });
+        //}
     }
 }

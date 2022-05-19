@@ -12,7 +12,7 @@ namespace DodgeOrDie.Models.Enemies
     {
         public int X { get; set; }
         public int Y { get; set; }
-        //public Point Location { get; set; }
+        public Point Location { get; set; }
         public Size Size { get; set; }
         public Image Sprite { get; set; }
         public Point Direction { get; set; }
@@ -27,14 +27,14 @@ namespace DodgeOrDie.Models.Enemies
         {
             X += Direction.X * speed;
             Y += Direction.Y * speed;
-            //Location = new Point(X, Y);
+            Location = new Point(X, Y);
         }
 
         public void Appear(int x, int y)
         {
             X = x;
             Y = y;
-            //Location = new Point(X, Y);
+            Location = new Point(X, Y);
         }
 
         public void SetDirection(Point direction)
