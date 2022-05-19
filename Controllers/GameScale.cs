@@ -11,5 +11,14 @@ namespace DodgeOrDie.Controllers
         public static int MaxEnemies = 10;
         public static int EnemySpeed = 10;
         public static int SpawnRate = 500;
+
+        public static void Increase()
+        {
+            MaxEnemies += 2;
+            EnemySpeed += 2;
+
+            if(SpawnRate > 150)
+                SpawnRate -= 10;
+        }
     }
 }

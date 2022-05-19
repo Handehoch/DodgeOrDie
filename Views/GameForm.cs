@@ -72,6 +72,7 @@ namespace DodgeOrDie
             if(Game.IsPlaying) Game.Playground.Character.Move(direction.X, direction.Y);
 
             Game.Enemies.ForEach(enemy => enemy.Move(GameScale.EnemySpeed));
+            IncreaseDifficulty();
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -86,10 +87,17 @@ namespace DodgeOrDie
                 e.Graphics.DrawImage(enemy.Sprite, new Point(enemy.X, enemy.Y));
         }
 
-        private void EnlargeDifficult()
+        private void IncreaseDifficulty()
         {
             if (!Game.IsPlaying) return;
 
+            var time = TimeSpan.FromMilliseconds(Game.Watch.ElapsedMilliseconds);
+            if (Math.Abs(time.TotalSeconds % 10) < 0.01)
+            {
+                GameScale.Increase();
+                Game.IncreaseMaxEnemies(GameScale.MaxEnemies);
+                _enemySpawner.Interval = GameScale.SpawnRate;
+            }
         }
 
         private void SpawnEmeny(object sender, EventArgs e)

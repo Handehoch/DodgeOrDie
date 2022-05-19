@@ -51,9 +51,9 @@ namespace DodgeOrDie.Models
             Watch.Update(Playground.Size.Width, Playground.Size.Height, Playground.EndPos.X, Playground.StartPos.Y);
         }
 
-        public void IncreaseMaxEnemies()
+        public void IncreaseMaxEnemies(int count)
         {
-            _maxEnemies += 2;
+            _maxEnemies = count;
         }
     }
 }
