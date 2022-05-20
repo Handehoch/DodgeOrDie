@@ -69,16 +69,20 @@ namespace DodgeOrDie
 
             Game.Playground.TryMoveCharacter();
 
-            var direction = CharacterMovement.GetDirection(Game.Playground.Character);
+            var isInverted = false;
+            if(GetCurrentTimeSpan().Seconds == 0 && GetCurrentTimeSpan().TotalSeconds < 5)
+                isInverted = !isInverted;
+
+            var direction = CharacterMovement.GetDirection(Game.Playground.Character, isInverted);
             if (Game.IsPlaying)
             {
                 Game.Playground.Character.Move(direction.X, direction.Y);
                 Game.Enemies.ForEach(enemy => enemy.Move(GameScale.EnemySpeed));
+                KillEnemy();
+                IncreaseDifficulty();
+                CharacterGetDamaged();
             }
 
-            KillEnemy();
-            IncreaseDifficulty();
-            CharacterGetDamaged();
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -93,11 +97,13 @@ namespace DodgeOrDie
                 e.Graphics.DrawImage(enemy.Sprite, new Point(enemy.X, enemy.Y));
         }
 
+        private TimeSpan GetCurrentTimeSpan() => TimeSpan.FromMilliseconds(Game.Watch.ElapsedMilliseconds);
+
         private void IncreaseDifficulty()
         {
             if (!Game.IsPlaying) return;
 
-            var time = TimeSpan.FromMilliseconds(Game.Watch.ElapsedMilliseconds);
+            var time = GetCurrentTimeSpan();
             if (Math.Abs(time.TotalSeconds % 10) < 0.01)
             {
                 GameScale.Increase();
@@ -130,7 +136,7 @@ namespace DodgeOrDie
         {
             foreach(var enemy in Game.Enemies.ToList())
             {
-                if (Game.Playground.Character.InteractsWith(enemy))
+                if (Game.Playground.Character.InteractsWith(enemy) && !Game.Playground.Character.GetDamaged)
                 {
                     Game.Playground.Character.GetDamage();
                     Game.Enemies.Remove(enemy);
@@ -141,7 +147,7 @@ namespace DodgeOrDie
             {
                 Game.Stop();
                 ScreenManager.CloseGameForm();
-                ScreenManager.ShowPauseForm();
+                ScreenManager.ShowStartForm();
             }
         }
     }   

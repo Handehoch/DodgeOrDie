@@ -43,25 +43,25 @@ namespace DodgeOrDie.Models
             Y += (int)dy * Speed;
         }
 
-        public void GetDamage()
+        public async void GetDamage()
         {
             Health--;
-            //EnableSaveFrames();
-            //await DisableSaveFramesAsync();
+            EnableSaveFrames();
+            await DisableSaveFramesAsync();
         }
 
-        //private void EnableSaveFrames()
-        //{
-        //    GetDamaged = true;
-        //}
+        private void EnableSaveFrames()
+        {
+            GetDamaged = true;
+        }
 
-        //private Task DisableSaveFramesAsync()
-        //{
-        //    return Task.Run(() =>
-        //    {
-        //        Thread.Sleep(5000);
-        //        GetDamaged = false;
-        //    });
-        //}
+        private Task DisableSaveFramesAsync()
+        {
+            return Task.Run(() =>
+            {
+                Thread.Sleep(3000);
+                GetDamaged = false;
+            });
+        }
     }
 }

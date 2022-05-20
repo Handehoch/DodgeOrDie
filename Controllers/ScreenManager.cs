@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DodgeOrDie.Views;
+using DodgeOrDie.Controllers;
 using System.Windows.Forms;
 
 namespace DodgeOrDie.Controllers
@@ -29,6 +30,7 @@ namespace DodgeOrDie.Controllers
         public static void CreateGame()
         {
             _gameForm = new GameForm();
+            CharacterMovement.Clear();
             _gameForm.Show();
         }
 
@@ -43,6 +45,7 @@ namespace DodgeOrDie.Controllers
             _pauseForm.SendToBack();
             _gameForm.BringToFront();
             _gameForm.Game.Start();
+            CharacterMovement.Clear();
         }
 
         public static void ClosePauseForm()
@@ -53,6 +56,11 @@ namespace DodgeOrDie.Controllers
         public static void CloseGameForm()
         {
             _gameForm?.Close();
+        }
+
+        public static void ShowStartForm()
+        {
+            _startForm?.Show();
         }
     }
 }

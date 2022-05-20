@@ -13,6 +13,11 @@ namespace DodgeOrDie.Controllers
     {
         private static readonly List<Keys> _keys = new List<Keys>();
 
+        public static void Clear()
+        {
+            _keys.Clear();
+        }
+
         public static void AddKey(object sender, KeyEventArgs e)
         {
             if (IsValidKey(e.KeyCode) && !_keys.Contains(e.KeyCode))
@@ -27,17 +32,20 @@ namespace DodgeOrDie.Controllers
 
         private static bool IsValidKey(Keys key)
         {
-            return key == Keys.Up || key == Keys.Down || key == Keys.Left || key == Keys.Right;
+            return key == Keys.W || key == Keys.S || key == Keys.A || key == Keys.D;
         }
 
-        public static Vector GetDirection(Character character)
+        public static Vector GetDirection(Character character, bool isInverted)
         {
             if (_keys.Count == 0) return new Vector(0, 0);
 
             var resDirection = new Vector();
             foreach (var key in _keys)
             {
-                var direction = GetDirectionByKey(key, character);
+                var direction = isInverted 
+                    ? GetInvertedDirectionByKey(key, character) 
+                    : GetDirectionByKey(key, character);
+
                 resDirection.X += direction.X;
                 resDirection.Y += direction.Y;
             }
@@ -48,13 +56,27 @@ namespace DodgeOrDie.Controllers
 
         public static Point GetDirectionByKey(Keys key, Character character)
         {
-            if (key == Keys.Up && character.GoUp)
+            if (key == Keys.W && character.GoUp)
                 return new Point(0, -1);
-            if (key == Keys.Down && character.GoDown)
+            if (key == Keys.S && character.GoDown)
                 return new Point(0, 1);
-            if (key == Keys.Left && character.GoLeft)
+            if (key == Keys.A && character.GoLeft)
                 return new Point(-1, 0);
-            if (key == Keys.Right && character.GoRight)
+            if (key == Keys.D && character.GoRight)
+                return new Point(1, 0);
+
+            return new Point(0, 0);
+        }
+
+        public static Point GetInvertedDirectionByKey(Keys key, Character character)
+        {
+            if (key == Keys.S && character.GoDown)
+                return new Point(0, -1);
+            if (key == Keys.W && character.GoUp)
+                return new Point(0, 1);
+            if (key == Keys.D && character.GoRight)
+                return new Point(-1, 0);
+            if (key == Keys.A && character.GoLeft)
                 return new Point(1, 0);
 
             return new Point(0, 0);
