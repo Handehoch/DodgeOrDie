@@ -13,14 +13,11 @@ namespace DodgeOrDie.Models
         public int X { get; private set; }
         public int Y { get; private set; }
         public int Speed { get; private set; }
-        public bool GoLeft { get; internal set; } = false;
-        public bool GoRight { get; internal set; } = false;
-        public bool GoUp { get; internal set; } = false;
-        public bool GoDown { get; internal set; } = false;
-        public bool GetDamaged { get; private set; } = false;
+        public bool GotDamaged { get; private set; } = false;
         public int Health { get; private set; }
+        public Image Sprite { get; private set; }
 
-        public readonly Image Sprite;
+        public bool GoLeft, GoRight, GoUp, GoDown;
         public readonly int Size = 32;
 
         public Character(int x, int y)
@@ -46,22 +43,27 @@ namespace DodgeOrDie.Models
         public async void GetDamage()
         {
             Health--;
-            EnableSaveFrames();
-            await DisableSaveFramesAsync();
+            GotDamaged = true;
+            await DisableSaveFramesAsync(3000);
         }
 
-        private void EnableSaveFrames()
+        private Task DisableSaveFramesAsync(int milliseconds) => Task.Run(() => {
+            Thread.Sleep(milliseconds);
+            GotDamaged = false;
+        });
+
+        public async void PingOnDamage(int amount)
         {
-            GetDamaged = true;
+            if (amount <= 0) return;
+
+            for (var i = 0; i < amount; i++)
+                await DisableSpriteFor(3000 / amount);
         }
 
-        private Task DisableSaveFramesAsync()
-        {
-            return Task.Run(() =>
-            {
-                Thread.Sleep(3000);
-                GetDamaged = false;
-            });
-        }
+        private Task DisableSpriteFor(int milliseconds) => Task.Run(() => {
+            Sprite = null;
+            Thread.Sleep(milliseconds);
+            Sprite = new Bitmap(@"C:\Users\boris\source\repos\DodgeOrDie\DodgeOrDie\Sprites\redHeart.png");
+        });
     }
 }

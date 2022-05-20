@@ -82,19 +82,20 @@ namespace DodgeOrDie
                 IncreaseDifficulty();
                 CharacterGetDamaged();
             }
-
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
             e.Graphics.DrawRectangle(Game.Playground.Pen, Game.Playground.Rectangle);
-            e.Graphics.DrawImage(Game.Playground.Character.Sprite, Game.Playground.Character.X, Game.Playground.Character.Y);
             e.Graphics.DrawRectangle(Game.Watch.Pen, Game.Watch.Rectangle);
             e.Graphics.DrawString(Game.Watch.MeasureTime(), Game.Watch.Font, Game.Watch.Time.Brush, Game.Watch.Time.StartPos);
             
             foreach(var enemy in Game.Enemies)
                 e.Graphics.DrawImage(enemy.Sprite, new Point(enemy.X, enemy.Y));
+
+            if (Game.Playground.Character.Sprite == null) return;
+            e.Graphics.DrawImage(Game.Playground.Character.Sprite, Game.Playground.Character.X, Game.Playground.Character.Y);
         }
 
         private TimeSpan GetCurrentTimeSpan() => TimeSpan.FromMilliseconds(Game.Watch.ElapsedMilliseconds);
@@ -136,9 +137,10 @@ namespace DodgeOrDie
         {
             foreach(var enemy in Game.Enemies.ToList())
             {
-                if (Game.Playground.Character.InteractsWith(enemy) && !Game.Playground.Character.GetDamaged)
+                if (Game.Playground.Character.InteractsWith(enemy) && !Game.Playground.Character.GotDamaged)
                 {
                     Game.Playground.Character.GetDamage();
+                    Game.Playground.Character.PingOnDamage(30);
                     Game.Enemies.Remove(enemy);
                 }
             }
