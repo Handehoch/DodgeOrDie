@@ -24,33 +24,33 @@ namespace DodgeOrDie.Controllers
 
         public static void CloseGame()
         {
-            _startForm.Close();
+            _startForm?.Close();
         }
 
         public static void CreateGame()
         {
-            _gameForm = new GameForm();
             CharacterMovement.Clear();
-            _gameForm.Show();
+            _gameForm = new GameForm();
+            _gameForm?.Show();
         }
 
         public static void ShowPauseForm()
         {
-            _pauseForm.Show();
-            _pauseForm.BringToFront();
+            _pauseForm?.Show();
+            _pauseForm?.BringToFront();
         }
 
         public static void ResumeGame()
         {
-            _pauseForm.SendToBack();
-            _gameForm.BringToFront();
-            _gameForm.Game.Start();
+            _pauseForm?.SendToBack();
+            _gameForm?.BringToFront();
+            _gameForm?.Game.Start();
             CharacterMovement.Clear();
         }
 
         public static void ClosePauseForm()
         {
-            _pauseForm.Close();
+            _pauseForm?.Close();
         }
 
         public static void CloseGameForm()

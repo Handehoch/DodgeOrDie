@@ -13,6 +13,15 @@ namespace DodgeOrDie.Controllers
     {
         public static Point GetDirection(Playground pg, IEnemy enemy)
         {
+            if (new Random().Next(10) == 5)
+            {
+                var vector = new System.Windows.Vector(pg.Character.X - enemy.X, pg.Character.Y - enemy.Y);
+                vector.Normalize();
+                var dx = vector.X >= 0 ? Math.Ceiling(vector.X) : Math.Floor(vector.X);
+                var dy = vector.Y >= 0 ? Math.Ceiling(vector.Y) : Math.Floor(vector.Y);
+                return new Point((int)dx, (int)dy);
+            }
+
             if (pg.Character.X < enemy.X && pg.Rectangle.Top <= enemy.Y && pg.Rectangle.Bottom >= enemy.Y) return new Point(-1, 0);
             if (pg.Character.X > enemy.X && pg.Rectangle.Top <= enemy.Y && pg.Rectangle.Bottom >= enemy.Y) return new Point(1, 0);
             if (pg.Character.Y < enemy.Y && pg.Rectangle.Left <= enemy.X && pg.Rectangle.Right >= enemy.X) return new Point(0, -1);

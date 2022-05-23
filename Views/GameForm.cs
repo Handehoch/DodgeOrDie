@@ -10,12 +10,16 @@ using System.Linq;
 
 namespace DodgeOrDie
 {
+    public delegate void CharacterEventHandler();
+
     public partial class GameForm : Form
     {
         internal readonly Game Game;
         private readonly Timer _gameLoop;
         private readonly Timer _enemySpawner;
         private readonly Size _size = new Size(1920, 1080);
+
+        public event CharacterEventHandler CharacterDamaged;
 
         public GameForm()
         {
@@ -24,10 +28,13 @@ namespace DodgeOrDie
             ClientSize = _size;
             FormBorderStyle = FormBorderStyle.None;
             WindowState = FormWindowState.Maximized;
+            DoubleBuffered = true;
+            BackColor = Color.Black;
+
             _enemySpawner = new Timer { Interval = GameScale.SpawnRate };
             _enemySpawner.Tick += SpawnEmeny;
-            //_enemySpawner.Tick += KillEnemy;
             _enemySpawner.Start();
+
             _gameLoop = new Timer() { Interval = 20 };
             _gameLoop.Tick += Update;
             _gameLoop.Start();
@@ -36,9 +43,11 @@ namespace DodgeOrDie
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            DoubleBuffered = true;
-            BackColor = Color.Black;
             Game.Start();
+
+            CharacterDamaged += DealDamageToCharacter;
+            CharacterDamaged += EndGame;
+
             KeyUp += CharacterMovement.RemoveKey;
             KeyDown += CharacterMovement.AddKey;
             KeyDown += (s, args) =>
@@ -46,11 +55,6 @@ namespace DodgeOrDie
                 if (args.KeyCode == Keys.Escape && Game.IsPlaying)
                 {
                     Game.Stop();
-                    ScreenManager.ShowPauseForm();
-                }
-                else if (args.KeyCode == Keys.Escape && !Game.IsPlaying)
-                {
-                    Game.Start();
                     ScreenManager.ShowPauseForm();
                 }
             };
@@ -69,19 +73,24 @@ namespace DodgeOrDie
 
             Game.Playground.TryMoveCharacter();
 
-            var isInverted = false;
-            if(GetCurrentTimeSpan().Seconds == 0 && GetCurrentTimeSpan().TotalSeconds < 5)
-                isInverted = !isInverted;
-
-            var direction = CharacterMovement.GetDirection(Game.Playground.Character, isInverted);
+            InvertControl();
+            var direction = CharacterMovement.GetDirection(Game.Playground.Character, false);
             if (Game.IsPlaying)
             {
                 Game.Playground.Character.Move(direction.X, direction.Y);
                 Game.Enemies.ForEach(enemy => enemy.Move(GameScale.EnemySpeed));
                 KillEnemy();
                 IncreaseDifficulty();
-                CharacterGetDamaged();
+                CharacterDamaged();
             }
+        }
+
+        public void InvertControl()
+        {
+            var currentTime = GetCurrentTimeSpan();
+            if (currentTime.Seconds != 0) return;
+
+            GameScale.IsControlInverted = !GameScale.IsControlInverted;
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -105,7 +114,7 @@ namespace DodgeOrDie
             if (!Game.IsPlaying) return;
 
             var time = GetCurrentTimeSpan();
-            if (Math.Abs(time.TotalSeconds % 10) < 0.01)
+            if (Math.Abs(time.TotalSeconds % 20) < 0.01)
             {
                 GameScale.Increase();
                 Game.IncreaseMaxEnemiesTo(GameScale.MaxEnemies);
@@ -133,7 +142,7 @@ namespace DodgeOrDie
                     Game.Enemies.Remove(enemy);
         }
 
-        private void CharacterGetDamaged()
+        private void DealDamageToCharacter()
         {
             foreach(var enemy in Game.Enemies.ToList())
             {
@@ -144,8 +153,11 @@ namespace DodgeOrDie
                     Game.Enemies.Remove(enemy);
                 }
             }
+        }
 
-            if(Game.Playground.Character.Health <= 0)
+        private void EndGame()
+        {
+            if (Game.Playground.Character.Health <= 0)
             {
                 Game.Stop();
                 ScreenManager.CloseGameForm();
