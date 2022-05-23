@@ -14,6 +14,7 @@ namespace DodgeOrDie.Controllers
         public static int SpawnRate = 500;
         public static bool IsControlInverted = false;
         public static Timer InversionController;
+        public static int BlankAmount = 3; //Абилка, позволяющая очистить экран от всех врагов
 
         static GameScale()
         {
@@ -28,6 +29,17 @@ namespace DodgeOrDie.Controllers
                 ? 10 * 1000 
                 : 30 * 1000;
             };
+        }
+
+        public static void RestoreToDeafult()
+        {
+            MaxEnemies = 10;
+            EnemySpeed = 10;
+            SpawnRate = 500;
+            BlankAmount = 3;
+            IsControlInverted = false;
+            InversionController.Stop();
+            InversionController.Interval = 30 * 1000;
         }
 
         public static void Increase()

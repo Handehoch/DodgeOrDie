@@ -157,5 +157,16 @@ namespace DodgeOrDie
                 ScreenManager.ShowStartForm();
             }
         }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+
+            if (e.KeyCode == Keys.Space && GameScale.BlankAmount > 0)
+            {
+                Game.RomveAllEnemies();
+                GameScale.BlankAmount--;
+            }
+        }
     }   
 }
