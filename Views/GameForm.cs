@@ -48,6 +48,8 @@ namespace DodgeOrDie
             CharacterDamaged += DealDamageToCharacter;
             CharacterDamaged += EndGame;
 
+            GameScale.InversionController.Start();
+
             KeyUp += CharacterMovement.RemoveKey;
             KeyDown += CharacterMovement.AddKey;
             KeyDown += (s, args) =>
@@ -73,8 +75,7 @@ namespace DodgeOrDie
 
             Game.Playground.TryMoveCharacter();
 
-            InvertControl();
-            var direction = CharacterMovement.GetDirection(Game.Playground.Character, false);
+            var direction = CharacterMovement.GetDirection(Game.Playground.Character, GameScale.IsControlInverted);
             if (Game.IsPlaying)
             {
                 Game.Playground.Character.Move(direction.X, direction.Y);
@@ -83,14 +84,6 @@ namespace DodgeOrDie
                 IncreaseDifficulty();
                 CharacterDamaged();
             }
-        }
-
-        public void InvertControl()
-        {
-            var currentTime = GetCurrentTimeSpan();
-            if (currentTime.Seconds != 0) return;
-
-            GameScale.IsControlInverted = !GameScale.IsControlInverted;
         }
 
         protected override void OnPaint(PaintEventArgs e)

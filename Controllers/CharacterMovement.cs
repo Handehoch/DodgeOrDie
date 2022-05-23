@@ -70,13 +70,13 @@ namespace DodgeOrDie.Controllers
 
         public static Point GetInvertedDirectionByKey(Keys key, Character character)
         {
-            if (key == Keys.S && character.GoDown)
+            if (key == Keys.S && character.GoUp)
                 return new Point(0, -1);
-            if (key == Keys.W && character.GoUp)
+            if (key == Keys.W && character.GoDown)
                 return new Point(0, 1);
-            if (key == Keys.D && character.GoRight)
+            if (key == Keys.D && character.GoLeft)
                 return new Point(-1, 0);
-            if (key == Keys.A && character.GoLeft)
+            if (key == Keys.A && character.GoRight)
                 return new Point(1, 0);
 
             return new Point(0, 0);
