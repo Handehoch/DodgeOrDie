@@ -50,7 +50,6 @@ namespace DodgeOrDie.Controllers
                 resDirection.Y += direction.Y;
             }
 
-            //resDirection.Normalize();
             return resDirection;
         }
 

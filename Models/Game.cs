@@ -18,10 +18,7 @@ namespace DodgeOrDie.Models
         public readonly List<IEnemy> Enemies;
         private int _maxEnemies;
 
-        public bool IsMaxEnemies 
-        { 
-            get => Enemies.Count == _maxEnemies; 
-        }
+        public bool IsMaxEnemies => Enemies.Count == _maxEnemies; 
 
         public bool IsPlaying { get; set; }
 

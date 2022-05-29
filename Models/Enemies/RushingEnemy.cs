@@ -10,12 +10,12 @@ namespace DodgeOrDie.Models.Enemies
 {
     internal class RushingEnemy : IEnemy
     {
-        public int X { get; set; }
-        public int Y { get; set; }
-        public Point Location { get; set; }
+        public double X { get; set; }
+        public double Y { get; set; }
+        public System.Windows.Vector Location { get; set; }
         public Size Size { get; set; }
         public Image Sprite { get; set; }
-        public Point Direction { get; set; }
+        public System.Windows.Vector Direction { get; set; }
 
         public RushingEnemy()
         {
@@ -27,17 +27,17 @@ namespace DodgeOrDie.Models.Enemies
         {
             X += Direction.X * speed;
             Y += Direction.Y * speed;
-            Location = new Point(X, Y);
+            Location = new System.Windows.Vector(X, Y);
         }
 
         public void Appear(int x, int y)
         {
             X = x;
             Y = y;
-            Location = new Point(X, Y);
+            Location = new System.Windows.Vector(X, Y);
         }
 
-        public void SetDirection(Point direction)
+        public void SetDirection(System.Windows.Vector direction)
         {
             Direction = direction;
         }

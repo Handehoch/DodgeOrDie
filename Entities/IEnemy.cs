@@ -9,9 +9,9 @@ namespace DodgeOrDie.Entities
 {
     internal interface IEnemy
     {
-        int X { get; set; }
-        int Y { get; set; }
-        Point Location { get; set; }
+        double X { get; set; }
+        double Y { get; set; }
+        System.Windows.Vector Location { get; set; }
         Size Size { get; set; }
         Image Sprite { get; set; }
         void Move(int speed);

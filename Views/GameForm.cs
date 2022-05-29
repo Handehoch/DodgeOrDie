@@ -103,7 +103,7 @@ namespace DodgeOrDie
             e.Graphics.DrawString(Game.Watch.MeasureTime(), Game.Watch.Font, Game.Watch.Time.Brush, Game.Watch.Time.StartPos);
             
             foreach(var enemy in Game.Enemies)
-                e.Graphics.DrawImage(enemy.Sprite, new Point(enemy.X, enemy.Y));
+                e.Graphics.DrawImage(enemy.Sprite, new PointF((float)enemy.X, (float)enemy.Y));
 
             for(var i = 0; i < Game.Playground.Character.Health; i++)
                 e.Graphics.DrawImage(_healthbar[i].Sprite, _healthbar[i].StartPos);
