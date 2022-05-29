@@ -55,6 +55,7 @@
     <Compile Include="Entities\IScreenDetail.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Models\Enemies\RushingEnemy.cs" />
+    <Compile Include="Models\Health.cs" />
     <Compile Include="Models\Timer\Time.cs" />
     <Compile Include="Models\Timer\Watch.cs" />
     <Compile Include="Views\GameForm.cs">
@@ -110,7 +111,8 @@
   <ItemGroup>
     <Content Include="Sprites\rushingEnemy.png" />
     <Content Include="Sprites\redHeart.png" />
-    <Content Include="Sprites\start menu.png" />
+    <Content Include="Sprites\whiteHeart.png" />
+    <Content Include="Sprites\whiteLargeHeart.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

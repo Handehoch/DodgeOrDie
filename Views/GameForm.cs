@@ -17,6 +17,7 @@ namespace DodgeOrDie
         internal readonly Game Game;
         private readonly Timer _gameLoop;
         private readonly Timer _enemySpawner;
+        private readonly Health[] _healthbar;
         private readonly Size _size = new Size(1920, 1080);
 
         public event CharacterEventHandler CharacterDamaged;
@@ -30,6 +31,14 @@ namespace DodgeOrDie
             WindowState = FormWindowState.Maximized;
             DoubleBuffered = true;
             BackColor = Color.Black;
+
+            _healthbar = new Health[Game.Playground.Character.Health];
+            var delta = 10;
+            for (var i = 0; i < _healthbar.Length; i++)
+            {
+                _healthbar[i] = new Health(delta, 10);
+                delta += 35;
+            }
 
             _enemySpawner = new Timer { Interval = GameScale.SpawnRate };
             _enemySpawner.Tick += SpawnEmeny;
@@ -96,8 +105,12 @@ namespace DodgeOrDie
             foreach(var enemy in Game.Enemies)
                 e.Graphics.DrawImage(enemy.Sprite, new Point(enemy.X, enemy.Y));
 
+            for(var i = 0; i < Game.Playground.Character.Health; i++)
+                e.Graphics.DrawImage(_healthbar[i].Sprite, _healthbar[i].StartPos);
+
             if (Game.Playground.Character.Sprite == null) return;
             e.Graphics.DrawImage(Game.Playground.Character.Sprite, Game.Playground.Character.X, Game.Playground.Character.Y);
+
         }
 
         private TimeSpan GetCurrentTimeSpan() => TimeSpan.FromMilliseconds(Game.Watch.ElapsedMilliseconds);
