@@ -17,7 +17,8 @@ namespace DodgeOrDie
         internal readonly Game Game;
         private readonly Timer _gameLoop;
         private readonly Timer _enemySpawner;
-        private readonly Health[] _healthbar;
+        private Health[] _healthbar;
+        private Blank[] _blanks;
         private readonly Size _size = new Size(1920, 1080);
 
         public event CharacterEventHandler CharacterDamaged;
@@ -31,14 +32,7 @@ namespace DodgeOrDie
             WindowState = FormWindowState.Maximized;
             DoubleBuffered = true;
             BackColor = Color.Black;
-
-            _healthbar = new Health[Game.Playground.Character.Health];
-            var delta = 10;
-            for (var i = 0; i < _healthbar.Length; i++)
-            {
-                _healthbar[i] = new Health(delta, 10);
-                delta += 35;
-            }
+            InitInGameUI();
 
             _enemySpawner = new Timer { Interval = GameScale.SpawnRate };
             _enemySpawner.Tick += SpawnEmeny;
@@ -69,6 +63,25 @@ namespace DodgeOrDie
                     ScreenManager.ShowPauseForm();
                 }
             };
+        }
+
+        private void InitInGameUI()
+        {
+            _healthbar = new Health[Game.Playground.Character.Health];
+            var delta = 10;
+            for (var i = 0; i < _healthbar.Length; i++)
+            {
+                _healthbar[i] = new Health(delta, 10);
+                delta += 35;
+            }
+
+            _blanks = new Blank[GameScale.BlankAmount];
+            delta = 10;
+            for(var i = 0; i < _blanks.Length; i++)
+            {
+                _blanks[i] = new Blank(delta, 50);
+                delta += 35;
+            }
         }
 
         protected override void OnResize(EventArgs e)
@@ -107,6 +120,9 @@ namespace DodgeOrDie
 
             for(var i = 0; i < Game.Playground.Character.Health; i++)
                 e.Graphics.DrawImage(_healthbar[i].Sprite, _healthbar[i].StartPos);
+
+            for(var i = 0; i < GameScale.BlankAmount; i++)
+                e.Graphics.DrawImage(_blanks[i].Sprite, _blanks[i].StartPos);
 
             if (Game.Playground.Character.Sprite == null) return;
             e.Graphics.DrawImage(Game.Playground.Character.Sprite, Game.Playground.Character.X, Game.Playground.Character.Y);

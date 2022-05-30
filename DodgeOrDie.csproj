@@ -54,6 +54,7 @@
     <Compile Include="Entities\IEnemy.cs" />
     <Compile Include="Entities\IScreenDetail.cs" />
     <Compile Include="Helpers\Extensions.cs" />
+    <Compile Include="Models\Blank.cs" />
     <Compile Include="Models\Enemies\RushingEnemy.cs" />
     <Compile Include="Models\Health.cs" />
     <Compile Include="Models\Timer\Time.cs" />
@@ -109,6 +110,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Sprites\blank.png" />
     <Content Include="Sprites\rushingEnemy.png" />
     <Content Include="Sprites\redHeart.png" />
     <Content Include="Sprites\whiteHeart.png" />

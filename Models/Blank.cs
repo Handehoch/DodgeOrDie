@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DodgeOrDie.Models
 {
-    internal class Health : IScreenDetail
+    internal class Blank : IScreenDetail
     {
         public Size Size { get; set; }
         public Point StartPos { get; set; }
@@ -17,10 +17,10 @@ namespace DodgeOrDie.Models
 
         public readonly Image Sprite;
 
-        public Health(int x, int y)
+        public Blank(int x, int y)
         {
             Size = new Size(30, 26);
-            Sprite = new Bitmap(@"C:\Users\boris\source\repos\DodgeOrDie\DodgeOrDie\Sprites\whiteLargeHeart.png");
+            Sprite = new Bitmap(@"C:\Users\boris\source\repos\DodgeOrDie\DodgeOrDie\Sprites\blank.png");
             Update(0, 0, x, y);
         }
 

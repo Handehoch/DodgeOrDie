@@ -13,7 +13,7 @@ namespace DodgeOrDie.Controllers
     {
         public static System.Windows.Vector GetDirection(Playground pg, IEnemy enemy)
         {
-            if (new Random().Next(0) == 5)
+            if (new Random().Next(10) == 5)
             {
                 var vector = new System.Windows.Vector(pg.Character.X - enemy.X, pg.Character.Y - enemy.Y);
                 vector.Normalize();
