@@ -29,7 +29,7 @@ namespace DodgeOrDie.Controllers
 
         public static void CreateGame()
         {
-            CharacterMovement.Clear();
+            PlayerMovement.Clear();
             GameScale.RestoreToDeafult();
             _gameForm = new GameForm();
             _gameForm?.Show();
@@ -46,7 +46,7 @@ namespace DodgeOrDie.Controllers
             _pauseForm?.SendToBack();
             _gameForm?.BringToFront();
             _gameForm?.Game.Start();
-            CharacterMovement.Clear();
+            PlayerMovement.Clear();
         }
 
         public static void ClosePauseForm()

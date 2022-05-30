@@ -47,7 +47,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\CharacterMovement.cs" />
+    <Compile Include="Controllers\PlayerMovement.cs" />
     <Compile Include="Controllers\EnemyMovement.cs" />
     <Compile Include="Controllers\GameScale.cs" />
     <Compile Include="Controllers\ScreenManager.cs" />
@@ -65,7 +65,7 @@
     <Compile Include="Views\GameForm.Designer.cs">
       <DependentUpon>GameForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Character.cs" />
+    <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\Playground.cs" />
     <Compile Include="Program.cs" />

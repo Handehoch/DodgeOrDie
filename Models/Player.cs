@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace DodgeOrDie.Models
 {
-    internal class Character
+    internal class Player
     {
         public int X { get; private set; }
         public int Y { get; private set; }
@@ -20,11 +20,11 @@ namespace DodgeOrDie.Models
         public bool GoLeft, GoRight, GoUp, GoDown;
         public readonly int Size = 32;
 
-        public Character(int x, int y)
+        public Player(int x, int y)
         {
             Update(x, y);
             Health = 3;
-            Sprite = new Bitmap(@"C:\Users\boris\source\repos\DodgeOrDie\DodgeOrDie\Sprites\redHeart.png");
+            Sprite = new Bitmap(@"C:\Users\boris\source\repos\DodgeOrDie\Sprites\redHeart.png");
         }
 
         public void Update(int x, int y)
@@ -63,7 +63,7 @@ namespace DodgeOrDie.Models
         private Task DisableSpriteFor(int milliseconds) => Task.Run(() => {
             Sprite = null;
             Thread.Sleep(milliseconds);
-            Sprite = new Bitmap(@"C:\Users\boris\source\repos\DodgeOrDie\DodgeOrDie\Sprites\redHeart.png");
+            Sprite = new Bitmap(@"C:\Users\boris\source\repos\DodgeOrDie\Sprites\redHeart.png");
         });
     }
 }

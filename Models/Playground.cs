@@ -10,7 +10,7 @@ namespace DodgeOrDie.Models
 {
     internal class Playground: IScreenDetail
     {
-        public Character Character { get; set; }
+        public Player Player { get; set; }
         public Pen Pen { get; set; }
         public Size Size { get; set; }
         public Point StartPos { get; set; }
@@ -24,7 +24,7 @@ namespace DodgeOrDie.Models
         public Playground(Pen pen, int width, int height)
         {
             Pen = pen;
-            Character = new Character(width, height);
+            Player = new Player(width, height);
             Update(width, height, 0, 0);
         }
 
@@ -33,15 +33,15 @@ namespace DodgeOrDie.Models
             Size = new Size((int)(Scale * width), (int)(Scale * height));
             StartPos = new Point((width - Size.Width) / 2, (height - Size.Height) / 2);
             Rectangle = new Rectangle(StartPos, Size);
-            Character.Update(EndPos.X, EndPos.Y);
+            Player.Update(EndPos.X, EndPos.Y);
         }
 
         public void TryMoveCharacter()
         {
-            Character.GoLeft = Character.X - 2 * Pen.Width > StartPos.X;
-            Character.GoRight = Character.X + 2 * Pen.Width + Character.Size < EndPos.X;
-            Character.GoUp = Character.Y - 2 * Pen.Width > StartPos.Y;
-            Character.GoDown = Character.Y + 2 * Pen.Width + Character.Size < EndPos.Y;
+            Player.GoLeft = Player.X - 2 * Pen.Width > StartPos.X;
+            Player.GoRight = Player.X + 2 * Pen.Width + Player.Size < EndPos.X;
+            Player.GoUp = Player.Y - 2 * Pen.Width > StartPos.Y;
+            Player.GoDown = Player.Y + 2 * Pen.Width + Player.Size < EndPos.Y;
         }
 
         public override string ToString()

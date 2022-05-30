@@ -53,8 +53,8 @@ namespace DodgeOrDie
 
             GameScale.InversionController.Start();
 
-            KeyUp += CharacterMovement.RemoveKey;
-            KeyDown += CharacterMovement.AddKey;
+            KeyUp += PlayerMovement.RemoveKey;
+            KeyDown += PlayerMovement.AddKey;
             KeyDown += (s, args) =>
             {
                 if (args.KeyCode == Keys.Escape && Game.IsPlaying)
@@ -67,7 +67,7 @@ namespace DodgeOrDie
 
         private void InitInGameUI()
         {
-            _healthbar = new Health[Game.Playground.Character.Health];
+            _healthbar = new Health[Game.Playground.Player.Health];
             var delta = 10;
             for (var i = 0; i < _healthbar.Length; i++)
             {
@@ -97,10 +97,10 @@ namespace DodgeOrDie
 
             Game.Playground.TryMoveCharacter();
 
-            var direction = CharacterMovement.GetDirection(Game.Playground.Character, GameScale.IsControlInverted);
+            var direction = PlayerMovement.GetDirection(Game.Playground.Player, GameScale.IsControlInverted);
             if (Game.IsPlaying)
             {
-                Game.Playground.Character.Move(direction.X, direction.Y);
+                Game.Playground.Player.Move(direction.X, direction.Y);
                 Game.Enemies.ForEach(enemy => enemy.Move(GameScale.EnemySpeed));
                 KillEnemy();
                 IncreaseDifficulty();
@@ -118,14 +118,14 @@ namespace DodgeOrDie
             foreach(var enemy in Game.Enemies)
                 e.Graphics.DrawImage(enemy.Sprite, new PointF((float)enemy.X, (float)enemy.Y));
 
-            for(var i = 0; i < Game.Playground.Character.Health; i++)
+            for(var i = 0; i < Game.Playground.Player.Health; i++)
                 e.Graphics.DrawImage(_healthbar[i].Sprite, _healthbar[i].StartPos);
 
             for(var i = 0; i < GameScale.BlankAmount; i++)
                 e.Graphics.DrawImage(_blanks[i].Sprite, _blanks[i].StartPos);
 
-            if (Game.Playground.Character.Sprite == null) return;
-            e.Graphics.DrawImage(Game.Playground.Character.Sprite, Game.Playground.Character.X, Game.Playground.Character.Y);
+            if (Game.Playground.Player.Sprite == null) return;
+            e.Graphics.DrawImage(Game.Playground.Player.Sprite, Game.Playground.Player.X, Game.Playground.Player.Y);
 
         }
 
@@ -168,10 +168,10 @@ namespace DodgeOrDie
         {
             foreach(var enemy in Game.Enemies.ToList())
             {
-                if (Game.Playground.Character.InteractsWith(enemy) && !Game.Playground.Character.GotDamaged)
+                if (Game.Playground.Player.InteractsWith(enemy) && !Game.Playground.Player.GotDamaged)
                 {
-                    Game.Playground.Character.GetDamage();
-                    Game.Playground.Character.PingOnDamage(30);
+                    Game.Playground.Player.GetDamage();
+                    Game.Playground.Player.PingOnDamage(30);
                     Game.Enemies.Remove(enemy);
                 }
             }
@@ -179,7 +179,7 @@ namespace DodgeOrDie
 
         private void EndGame()
         {
-            if (Game.Playground.Character.Health <= 0)
+            if (Game.Playground.Player.Health <= 0)
             {
                 Game.Stop();
                 ScreenManager.CloseGameForm();

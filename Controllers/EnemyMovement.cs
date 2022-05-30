@@ -15,14 +15,14 @@ namespace DodgeOrDie.Controllers
         {
             if (new Random().Next(10) == 5)
             {
-                var vector = new System.Windows.Vector(pg.Character.X - enemy.X, pg.Character.Y - enemy.Y);
+                var vector = new System.Windows.Vector(pg.Player.X - enemy.X, pg.Player.Y - enemy.Y);
                 vector.Normalize();
                 return vector;
             }
 
-            if (pg.Character.X < enemy.X && pg.Rectangle.Top <= enemy.Y && pg.Rectangle.Bottom >= enemy.Y) return new System.Windows.Vector(-1, 0);
-            if (pg.Character.X > enemy.X && pg.Rectangle.Top <= enemy.Y && pg.Rectangle.Bottom >= enemy.Y) return new System.Windows.Vector(1, 0);
-            if (pg.Character.Y < enemy.Y && pg.Rectangle.Left <= enemy.X && pg.Rectangle.Right >= enemy.X) return new System.Windows.Vector(0, -1);
+            if (pg.Player.X < enemy.X && pg.Rectangle.Top <= enemy.Y && pg.Rectangle.Bottom >= enemy.Y) return new System.Windows.Vector(-1, 0);
+            if (pg.Player.X > enemy.X && pg.Rectangle.Top <= enemy.Y && pg.Rectangle.Bottom >= enemy.Y) return new System.Windows.Vector(1, 0);
+            if (pg.Player.Y < enemy.Y && pg.Rectangle.Left <= enemy.X && pg.Rectangle.Right >= enemy.X) return new System.Windows.Vector(0, -1);
             return new System.Windows.Vector(0, 1);
         }
 

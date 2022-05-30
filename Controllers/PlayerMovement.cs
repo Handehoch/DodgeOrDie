@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Windows;
 using DodgeOrDie.Models;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DodgeOrDie.Controllers
 {
-    internal static class CharacterMovement
+    internal static class PlayerMovement
     {
         private static readonly List<Keys> _keys = new List<Keys>();
 
@@ -35,7 +32,7 @@ namespace DodgeOrDie.Controllers
             return key == Keys.W || key == Keys.S || key == Keys.A || key == Keys.D;
         }
 
-        public static Vector GetDirection(Character character, bool isInverted)
+        public static Vector GetDirection(Player character, bool isInverted)
         {
             if (_keys.Count == 0) return new Vector(0, 0);
 
@@ -53,7 +50,7 @@ namespace DodgeOrDie.Controllers
             return resDirection;
         }
 
-        public static Point GetDirectionByKey(Keys key, Character character)
+        public static Point GetDirectionByKey(Keys key, Player character)
         {
             if (key == Keys.W && character.GoUp)
                 return new Point(0, -1);
@@ -67,7 +64,7 @@ namespace DodgeOrDie.Controllers
             return new Point(0, 0);
         }
 
-        public static Point GetInvertedDirectionByKey(Keys key, Character character)
+        public static Point GetInvertedDirectionByKey(Keys key, Player character)
         {
             if (key == Keys.S && character.GoUp)
                 return new Point(0, -1);

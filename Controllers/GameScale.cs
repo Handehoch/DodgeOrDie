@@ -51,4 +51,10 @@ namespace DodgeOrDie.Controllers
                 SpawnRate -= 15;
         }
     }
+
+    internal enum GameMode
+    {
+        Straight,
+        
+    }
 }
