@@ -17,6 +17,7 @@ namespace DodgeOrDie
         internal readonly Game Game;
         private readonly Timer _gameLoop;
         private readonly Timer _enemySpawner;
+        private readonly Timer _difficultyController;
         private Health[] _healthbar;
         private Blank[] _blanks;
         private readonly Size _size = new Size(1920, 1080);
@@ -41,6 +42,10 @@ namespace DodgeOrDie
             _gameLoop = new Timer() { Interval = 20 };
             _gameLoop.Tick += Update;
             _gameLoop.Start();
+
+            _difficultyController = new Timer() { Interval = 60 * 1000, };
+            _difficultyController.Tick += IncreaseDifficulty;
+            _difficultyController.Start();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -50,8 +55,6 @@ namespace DodgeOrDie
 
             CharacterDamaged += DealDamageToCharacter;
             CharacterDamaged += EndGame;
-
-            GameScale.InversionController.Start();
 
             KeyUp += PlayerMovement.RemoveKey;
             KeyDown += PlayerMovement.AddKey;
@@ -103,7 +106,6 @@ namespace DodgeOrDie
                 Game.Playground.Player.Move(direction.X, direction.Y);
                 Game.Enemies.ForEach(enemy => enemy.Move(GameScale.EnemySpeed));
                 KillEnemy();
-                IncreaseDifficulty();
                 CharacterDamaged();
             }
         }
@@ -131,17 +133,17 @@ namespace DodgeOrDie
 
         private TimeSpan GetCurrentTimeSpan() => TimeSpan.FromMilliseconds(Game.Watch.ElapsedMilliseconds);
 
-        private void IncreaseDifficulty()
+        private void IncreaseDifficulty(object sender, EventArgs e)
         {
             if (!Game.IsPlaying) return;
 
-            var time = GetCurrentTimeSpan();
-            if (Math.Abs(time.TotalSeconds % 20) < 0.01)
-            {
-                GameScale.Increase();
-                Game.IncreaseMaxEnemiesTo(GameScale.MaxEnemies);
-                _enemySpawner.Interval = GameScale.SpawnRate;
-            }
+            //var time = GetCurrentTimeSpan();
+            //if (Math.Abs(time.TotalSeconds % 20) < 0.01)
+            //{
+            GameScale.Increase();
+            Game.IncreaseMaxEnemiesTo(GameScale.MaxEnemies);
+            _enemySpawner.Interval = GameScale.SpawnRate;
+            //}
         }
 
         private void SpawnEmeny(object sender, EventArgs e)
@@ -151,11 +153,11 @@ namespace DodgeOrDie
             var enemy = new RushingEnemy();
             var position = EnemyMovement.GetValidPlaceToAppear(Game.Playground, Width, Height);
             enemy.Appear(position.X, position.Y);
-            enemy.SetDirection(EnemyMovement.GetDirection(Game.Playground, enemy));
+            enemy.SetDirection(EnemyMovement.GetDirection(Game.Playground, enemy, GameScale.Mode));
             Game.Enemies.Add(enemy);
         }
 
-        private void KillEnemy(/*object sender, EventArgs e*/)
+        private void KillEnemy()
         {
             if (!Game.IsMaxEnemies) return;
 

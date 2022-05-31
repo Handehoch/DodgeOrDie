@@ -34,12 +34,16 @@ namespace DodgeOrDie.Models
         {
             IsPlaying = true;
             Watch.Start();
+            GameScale.InversionController.Start();
+            GameScale.ModeController.Start();
         }
 
         public void Stop()
         {
             IsPlaying = false;
             Watch.Stop();
+            GameScale.InversionController.Stop();
+            GameScale.ModeController.Stop();
         }
 
         public void Update(int width, int height)

@@ -11,19 +11,23 @@ namespace DodgeOrDie.Controllers
 {
     internal static class EnemyMovement
     {
-        public static System.Windows.Vector GetDirection(Playground pg, IEnemy enemy)
+        public static System.Windows.Vector GetDirection(Playground pg, IEnemy enemy, GameMode mode)
         {
-            if (new Random().Next(10) == 5)
-            {
-                var vector = new System.Windows.Vector(pg.Player.X - enemy.X, pg.Player.Y - enemy.Y);
-                vector.Normalize();
-                return vector;
-            }
+            if(mode == GameMode.AimToPlayer) return GetDiagonalDirection(pg, enemy);
+
+            if (new Random().Next(10) == 5) return GetDiagonalDirection(pg, enemy);
 
             if (pg.Player.X < enemy.X && pg.Rectangle.Top <= enemy.Y && pg.Rectangle.Bottom >= enemy.Y) return new System.Windows.Vector(-1, 0);
             if (pg.Player.X > enemy.X && pg.Rectangle.Top <= enemy.Y && pg.Rectangle.Bottom >= enemy.Y) return new System.Windows.Vector(1, 0);
             if (pg.Player.Y < enemy.Y && pg.Rectangle.Left <= enemy.X && pg.Rectangle.Right >= enemy.X) return new System.Windows.Vector(0, -1);
             return new System.Windows.Vector(0, 1);
+        }
+
+        private static System.Windows.Vector GetDiagonalDirection(Playground pg, IEnemy enemy)
+        {
+            var vector = new System.Windows.Vector(pg.Player.X - enemy.X, pg.Player.Y - enemy.Y);
+            vector.Normalize();
+            return vector;
         }
 
         public static Point GetValidPlaceToAppear(Playground pg, int width, int height)

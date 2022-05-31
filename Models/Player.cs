@@ -23,8 +23,8 @@ namespace DodgeOrDie.Models
         public Player(int x, int y)
         {
             Update(x, y);
-            Health = 3;
-            Sprite = new Bitmap(@"C:\Users\boris\source\repos\DodgeOrDie\Sprites\redHeart.png");
+            Health = 5;
+            Sprite = new Bitmap(@"C:..\..\..\DodgeOrDie\Sprites\redHeart.png");
         }
 
         public void Update(int x, int y)

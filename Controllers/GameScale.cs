@@ -14,20 +14,25 @@ namespace DodgeOrDie.Controllers
         public static int SpawnRate = 500;
         public static bool IsControlInverted = false;
         public static Timer InversionController;
+        public static Timer ModeController;
+        public static GameMode Mode;
         public static int BlankAmount = 3; //Абилка, позволяющая очистить экран от всех врагов
 
         static GameScale()
         {
-            InversionController = new Timer() 
+            Mode = GameMode.Straight;
+
+            InversionController = new Timer() { Interval = 30 * 1000, };
+            InversionController.Tick += (s, e) =>
             {
-                Interval = 30 * 1000,
+                IsControlInverted = !IsControlInverted;
+                InversionController.Interval = IsControlInverted ? 10 * 1000 : 30 * 1000;
             };
 
-            InversionController.Tick += (s, e) => {
-                IsControlInverted = !IsControlInverted;
-                InversionController.Interval = IsControlInverted 
-                ? 10 * 1000 
-                : 30 * 1000;
+            ModeController = new Timer() { Interval = 40 * 1000, };
+            ModeController.Tick += (s, e) =>
+            {
+                Mode = Mode == GameMode.Straight ? GameMode.AimToPlayer : GameMode.Straight;
             };
         }
 
@@ -40,6 +45,7 @@ namespace DodgeOrDie.Controllers
             IsControlInverted = false;
             InversionController.Stop();
             InversionController.Interval = 30 * 1000;
+            ModeController.Stop();
         }
 
         public static void Increase()
@@ -55,6 +61,6 @@ namespace DodgeOrDie.Controllers
     internal enum GameMode
     {
         Straight,
-        
+        AimToPlayer
     }
 }

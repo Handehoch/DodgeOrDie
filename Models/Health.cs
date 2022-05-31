@@ -20,7 +20,7 @@ namespace DodgeOrDie.Models
         public Health(int x, int y)
         {
             Size = new Size(30, 26);
-            Sprite = new Bitmap(@"C:\Users\boris\source\repos\DodgeOrDie\Sprites\whiteLargeHeart.png");
+            Sprite = new Bitmap(@"C:..\..\..\DodgeOrDie\Sprites\whiteLargeHeart.png");
             Update(0, 0, x, y);
         }
 
