@@ -20,7 +20,7 @@ namespace DodgeOrDie.Models
         public Blank(int x, int y)
         {
             Size = new Size(30, 26);
-            Sprite = new Bitmap(@"C:..\..\..\DodgeOrDie\Sprites\blank.png");
+            Sprite = new Bitmap(@"..\..\..\DodgeOrDie\Sprites\blank.png");
             Update(0, 0, x, y);
         }
 

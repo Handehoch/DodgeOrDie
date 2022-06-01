@@ -103,14 +103,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Sprites\HalfBoldPixel7-2rw3.ttf" />
+    <None Include="Sprites\mainFont.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Sprites\battle.wav" />
     <Content Include="Sprites\blank.png" />
+    <Content Include="Sprites\greyHeart.png" />
     <Content Include="Sprites\rushingEnemy.png" />
     <Content Include="Sprites\redHeart.png" />
     <Content Include="Sprites\whiteHeart.png" />

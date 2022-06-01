@@ -24,7 +24,7 @@ namespace DodgeOrDie.Models
         {
             Update(x, y);
             Health = 5;
-            Sprite = new Bitmap(@"C:..\..\..\DodgeOrDie\Sprites\redHeart.png");
+            Sprite = new Bitmap(@"..\..\..\DodgeOrDie\Sprites\redHeart.png");
         }
 
         public void Update(int x, int y)
@@ -61,9 +61,9 @@ namespace DodgeOrDie.Models
         }
 
         private Task DisableSpriteFor(int milliseconds) => Task.Run(() => {
-            Sprite = null;
+            Sprite = null; /*new Bitmap(@"..\..\..\DodgeOrDie\Sprites\greyHeart.png");*/
             Thread.Sleep(milliseconds);
-            Sprite = new Bitmap(@"C:\Users\boris\source\repos\DodgeOrDie\Sprites\redHeart.png");
+            Sprite = new Bitmap(@"..\..\..\DodgeOrDie\Sprites\redHeart.png");
         });
     }
 }

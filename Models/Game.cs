@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using DodgeOrDie.Controllers;
 using DodgeOrDie.Models.Timer;
 using DodgeOrDie.Entities;
-using DodgeOrDie.Models.Enemies;
+using System.Media;
 
 namespace DodgeOrDie.Models
 {
@@ -18,6 +18,7 @@ namespace DodgeOrDie.Models
         public readonly List<IEnemy> Enemies;
         public readonly System.Windows.Forms.Timer DifficultyController;
         public readonly System.Windows.Forms.Timer EnemySpawner;
+        private readonly SoundPlayer _player;
         private int _maxEnemies;
 
         public bool IsMaxEnemies => Enemies.Count == _maxEnemies; 
@@ -31,6 +32,8 @@ namespace DodgeOrDie.Models
             _maxEnemies = maxEnemies;
             Enemies = new List<IEnemy>();
 
+            _player = new SoundPlayer(@"..\..\..\DodgeOrDie\Sprites\battle.wav");
+
             DifficultyController = new System.Windows.Forms.Timer() { Interval = 60 * 1000, };
             EnemySpawner = new System.Windows.Forms.Timer() { Interval = spawnRate, };
         }
@@ -43,6 +46,7 @@ namespace DodgeOrDie.Models
             EnemySpawner.Start();
             GameScale.InversionController.Start();
             GameScale.ModeController.Start();
+            _player.PlayLooping();
         }
 
         public void Stop()
@@ -53,6 +57,7 @@ namespace DodgeOrDie.Models
             EnemySpawner.Stop();
             GameScale.InversionController.Stop();
             GameScale.ModeController.Stop();
+            _player.Stop();
         }
 
         public void Update(int width, int height)
