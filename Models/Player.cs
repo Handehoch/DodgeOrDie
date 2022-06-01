@@ -61,7 +61,7 @@ namespace DodgeOrDie.Models
         }
 
         private Task DisableSpriteFor(int milliseconds) => Task.Run(() => {
-            Sprite = null; /*new Bitmap(@"..\..\..\DodgeOrDie\Sprites\greyHeart.png");*/
+            Sprite = new Bitmap(@"..\..\..\DodgeOrDie\Sprites\redHeartPing.png");
             Thread.Sleep(milliseconds);
             Sprite = new Bitmap(@"..\..\..\DodgeOrDie\Sprites\redHeart.png");
         });

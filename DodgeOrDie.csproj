@@ -112,7 +112,7 @@
   <ItemGroup>
     <Content Include="Sprites\battle.wav" />
     <Content Include="Sprites\blank.png" />
-    <Content Include="Sprites\greyHeart.png" />
+    <Content Include="Sprites\redHeartPing.png" />
     <Content Include="Sprites\rushingEnemy.png" />
     <Content Include="Sprites\redHeart.png" />
     <Content Include="Sprites\whiteHeart.png" />
