@@ -22,7 +22,7 @@ namespace DodgeOrDie.Views
         public PauseForm()
         {
             _fc = new PrivateFontCollection();
-            _fc.AddFontFile(@"C:\Users\boris\source\repos\DodgeOrDie\Sprites\HalfBoldPixel7-2rw3.ttf");
+            _fc.AddFontFile(@"..\..\..\DodgeOrDie\Sprites\mainFont.ttf");
             InitControls();
             BackColor = Color.Black;
             FormBorderStyle = FormBorderStyle.None;

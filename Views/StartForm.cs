@@ -21,7 +21,7 @@ namespace DodgeOrDie.Views
         public StartForm()
         {
             _fc = new PrivateFontCollection();
-            _fc.AddFontFile(@"C:\Users\boris\source\repos\DodgeOrDie\Sprites\HalfBoldPixel7-2rw3.ttf");
+            _fc.AddFontFile(@"..\..\..\DodgeOrDie\Sprites\mainFont.ttf");
             //_titleFont = new Font(_fc.Families[0], (Width + Height) / 6);
             InitControls();
             BackColor = Color.Black;

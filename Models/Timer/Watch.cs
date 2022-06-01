@@ -29,7 +29,7 @@ namespace DodgeOrDie.Models.Timer
             Pen = pen;
             Time = new Time(Size.Width, Size.Height, StartPos.X, StartPos.Y);
             _fc = new PrivateFontCollection();
-            _fc.AddFontFile(@"..\..\..\DodgeOrDie\Sprites\HalfBoldPixel7-2rw3.ttf");
+            _fc.AddFontFile(@"..\..\..\DodgeOrDie\Sprites\mainFont.ttf");
             Update(width, height, x, y);
         }
 
