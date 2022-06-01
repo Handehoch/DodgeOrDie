@@ -31,7 +31,7 @@ namespace DodgeOrDie.Models
         {
             X = x / 2;
             Y = y / 2;
-            Speed = (x + y) / 300;
+            Speed = (x + y) / 250;
         }
 
         public void Move(double dx, double dy)

@@ -16,24 +16,31 @@ namespace DodgeOrDie.Models
         public readonly Playground Playground;
         public readonly Watch Watch;
         public readonly List<IEnemy> Enemies;
+        public readonly System.Windows.Forms.Timer DifficultyController;
+        public readonly System.Windows.Forms.Timer EnemySpawner;
         private int _maxEnemies;
 
         public bool IsMaxEnemies => Enemies.Count == _maxEnemies; 
 
         public bool IsPlaying { get; set; }
 
-        public Game(Pen pen, int width, int height)
+        public Game(Pen pen, int width, int height, int maxEnemies, int spawnRate)
         {
             Playground = new Playground(pen, width, height);
             Watch = new Watch(pen, width, height, Playground.EndPos.X, Playground.StartPos.Y);
-            _maxEnemies = 10;
+            _maxEnemies = maxEnemies;
             Enemies = new List<IEnemy>();
+
+            DifficultyController = new System.Windows.Forms.Timer() { Interval = 60 * 1000, };
+            EnemySpawner = new System.Windows.Forms.Timer() { Interval = spawnRate, };
         }
 
         public void Start()
         {
             IsPlaying = true;
             Watch.Start();
+            DifficultyController.Start();
+            EnemySpawner.Start();
             GameScale.InversionController.Start();
             GameScale.ModeController.Start();
         }
@@ -42,6 +49,8 @@ namespace DodgeOrDie.Models
         {
             IsPlaying = false;
             Watch.Stop();
+            DifficultyController.Stop();
+            EnemySpawner.Stop();
             GameScale.InversionController.Stop();
             GameScale.ModeController.Stop();
         }

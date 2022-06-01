@@ -16,8 +16,6 @@ namespace DodgeOrDie
     {
         internal readonly Game Game;
         private readonly Timer _gameLoop;
-        private readonly Timer _enemySpawner;
-        private readonly Timer _difficultyController;
         private Health[] _healthbar;
         private Blank[] _blanks;
         private readonly Size _size = new Size(1920, 1080);
@@ -26,7 +24,7 @@ namespace DodgeOrDie
 
         public GameForm()
         {
-            Game = new Game(new Pen(Color.White, 5f), _size.Width, _size.Height);
+            Game = new Game(new Pen(Color.White, 5f), _size.Width, _size.Height, GameScale.MaxEnemies, GameScale.SpawnRate);
             InitializeComponent();
             ClientSize = _size;
             FormBorderStyle = FormBorderStyle.None;
@@ -35,17 +33,12 @@ namespace DodgeOrDie
             BackColor = Color.Black;
             InitInGameUI();
 
-            _enemySpawner = new Timer { Interval = GameScale.SpawnRate };
-            _enemySpawner.Tick += SpawnEmeny;
-            _enemySpawner.Start();
-
             _gameLoop = new Timer() { Interval = 20 };
             _gameLoop.Tick += Update;
             _gameLoop.Start();
 
-            _difficultyController = new Timer() { Interval = 60 * 1000, };
-            _difficultyController.Tick += IncreaseDifficulty;
-            _difficultyController.Start();
+            Game.EnemySpawner.Tick += SpawnEmeny;
+            Game.DifficultyController.Tick += IncreaseDifficulty;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -131,19 +124,13 @@ namespace DodgeOrDie
 
         }
 
-        private TimeSpan GetCurrentTimeSpan() => TimeSpan.FromMilliseconds(Game.Watch.ElapsedMilliseconds);
-
         private void IncreaseDifficulty(object sender, EventArgs e)
         {
             if (!Game.IsPlaying) return;
 
-            //var time = GetCurrentTimeSpan();
-            //if (Math.Abs(time.TotalSeconds % 20) < 0.01)
-            //{
             GameScale.Increase();
             Game.IncreaseMaxEnemiesTo(GameScale.MaxEnemies);
-            _enemySpawner.Interval = GameScale.SpawnRate;
-            //}
+            Game.EnemySpawner.Interval = GameScale.SpawnRate;
         }
 
         private void SpawnEmeny(object sender, EventArgs e)
