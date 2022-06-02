@@ -160,7 +160,7 @@ namespace DodgeOrDie
                 if (Game.Playground.Player.InteractsWith(enemy) && !Game.Playground.Player.GotDamaged)
                 {
                     Game.Playground.Player.GetDamage();
-                    Game.Playground.Player.PingOnDamage(30);
+                    Game.Playground.Player.PingOnDamage(60);
                     Game.Enemies.Remove(enemy);
                 }
             }
