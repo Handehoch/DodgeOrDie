@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DodgeOrDie.Views;
-using DodgeOrDie.Controllers;
-using System.Windows.Forms;
+﻿using DodgeOrDie.Views;
 
 namespace DodgeOrDie.Controllers
 {

@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Data;
+using System.Linq;
 using System.Drawing;
 using System.Windows.Forms;
-using DodgeOrDie.Controllers;
 using DodgeOrDie.Models;
-using DodgeOrDie.Models.Enemies;
 using DodgeOrDie.Helpers;
-using System.Linq;
+using DodgeOrDie.Controllers;
+using DodgeOrDie.Models.Enemies;
 
 namespace DodgeOrDie
 {

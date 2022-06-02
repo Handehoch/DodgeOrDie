@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DodgeOrDie.Models;
 using System.Drawing;
+using DodgeOrDie.Models;
 using DodgeOrDie.Entities;
 
 namespace DodgeOrDie.Controllers

@@ -1,13 +1,9 @@
-﻿using System;
+﻿using System.Drawing;
+using System.Media;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DodgeOrDie.Entities;
 using DodgeOrDie.Controllers;
 using DodgeOrDie.Models.Timer;
-using DodgeOrDie.Entities;
-using System.Media;
 
 namespace DodgeOrDie.Models
 {
