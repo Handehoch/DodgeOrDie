@@ -30,7 +30,7 @@ namespace DodgeOrDie.Models
 
             _player = new SoundPlayer(@"..\..\..\DodgeOrDie\Sprites\battle.wav");
 
-            DifficultyController = new System.Windows.Forms.Timer() { Interval = 60 * 1000, };
+            DifficultyController = new System.Windows.Forms.Timer() { Interval = 30 * 1000, };
             EnemySpawner = new System.Windows.Forms.Timer() { Interval = spawnRate, };
         }
 

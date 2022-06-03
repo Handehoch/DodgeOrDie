@@ -45,10 +45,10 @@ namespace DodgeOrDie.Controllers
 
         public static void Increase()
         {
-            MaxEnemies += 2;
+            MaxEnemies += 5;
             EnemySpeed += 1;
 
-            if(SpawnRate > 200)
+            if(SpawnRate > 100)
                 SpawnRate -= 15;
         }
     }
