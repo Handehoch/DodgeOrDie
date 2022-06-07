@@ -11,11 +11,10 @@ namespace DodgeOrDie
 {
     public delegate void CharacterEventHandler();
 
-    public partial class GameForm : Form
+    public sealed partial class GameForm : Form
     {
         internal readonly Game Game;
-        private readonly Timer _gameLoop;
-        private Health[] _healthbar;
+        private Health[] _healthBar;
         private Blank[] _blanks;
         private readonly Size _size = new Size(1920, 1080);
 
@@ -32,11 +31,11 @@ namespace DodgeOrDie
             BackColor = Color.Black;
             InitInGameUI();
 
-            _gameLoop = new Timer() { Interval = 20 };
-            _gameLoop.Tick += Update;
-            _gameLoop.Start();
+            var gameLoop = new Timer() { Interval = 20 };
+            gameLoop.Tick += Update;
+            gameLoop.Start();
 
-            Game.EnemySpawner.Tick += SpawnEmeny;
+            Game.EnemySpawner.Tick += SpawnEnemy;
             Game.DifficultyController.Tick += IncreaseDifficulty;
         }
 
@@ -52,21 +51,19 @@ namespace DodgeOrDie
             KeyDown += PlayerMovement.AddKey;
             KeyDown += (s, args) =>
             {
-                if (args.KeyCode == Keys.Escape && Game.IsPlaying)
-                {
-                    Game.Stop();
-                    ScreenManager.ShowPauseForm();
-                }
+                if (args.KeyCode != Keys.Escape || !Game.IsPlaying) return;
+                Game.Stop();
+                ScreenManager.ShowPauseForm();
             };
         }
 
         private void InitInGameUI()
         {
-            _healthbar = new Health[Game.Playground.Player.Health];
+            _healthBar = new Health[Game.Playground.Player.Health];
             var delta = 10;
-            for (var i = 0; i < _healthbar.Length; i++)
+            for (var i = 0; i < _healthBar.Length; i++)
             {
-                _healthbar[i] = new Health(delta, 10);
+                _healthBar[i] = new Health(delta, 10);
                 delta += 35;
             }
 
@@ -93,13 +90,12 @@ namespace DodgeOrDie
             Game.Playground.TryMoveCharacter();
 
             var direction = PlayerMovement.GetDirection(Game.Playground.Player, GameScale.IsControlInverted);
-            if (Game.IsPlaying)
-            {
-                Game.Playground.Player.Move(direction.X, direction.Y);
-                Game.Enemies.ForEach(enemy => enemy.Move(GameScale.EnemySpeed));
-                KillEnemy();
-                CharacterDamaged();
-            }
+            if (!Game.IsPlaying) return;
+
+            Game.Playground.Player.Move(direction.X, direction.Y);
+            Game.Enemies.ForEach(enemy => enemy.Move(GameScale.EnemySpeed));
+            KillEnemy();
+            CharacterDamaged?.Invoke();
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -113,7 +109,7 @@ namespace DodgeOrDie
                 e.Graphics.DrawImage(enemy.Sprite, new PointF((float)enemy.X, (float)enemy.Y));
 
             for(var i = 0; i < Game.Playground.Player.Health; i++)
-                e.Graphics.DrawImage(_healthbar[i].Sprite, _healthbar[i].StartPos);
+                e.Graphics.DrawImage(_healthBar[i].Sprite, _healthBar[i].StartPos);
 
             for(var i = 0; i < GameScale.BlankAmount; i++)
                 e.Graphics.DrawImage(_blanks[i].Sprite, _blanks[i].StartPos);
@@ -132,7 +128,7 @@ namespace DodgeOrDie
             Game.EnemySpawner.Interval = GameScale.SpawnRate;
         }
 
-        private void SpawnEmeny(object sender, EventArgs e)
+        private void SpawnEnemy(object sender, EventArgs e)
         {
             if (Game.IsMaxEnemies) return;
 
@@ -147,43 +143,39 @@ namespace DodgeOrDie
         {
             if (!Game.IsMaxEnemies) return;
 
-            foreach(var enemy in Game.Enemies.ToList())
-                if(!enemy.Location.IsInsideBounds(Width, Height))
-                    Game.Enemies.Remove(enemy);
+            foreach (var enemy in Game.Enemies.ToList().Where(enemy => !enemy.Location.IsInsideBounds(Width, Height)))
+                Game.Enemies.Remove(enemy);
         }
 
         private void DealDamageToCharacter()
         {
             foreach(var enemy in Game.Enemies.ToList())
             {
-                if (Game.Playground.Player.InteractsWith(enemy) && !Game.Playground.Player.GotDamaged)
-                {
-                    Game.Playground.Player.GetDamage();
-                    Game.Playground.Player.PingOnDamage(60);
-                    Game.Enemies.Remove(enemy);
-                }
+                if (!Game.Playground.Player.InteractsWith(enemy) || Game.Playground.Player.GotDamaged) continue;
+
+                Game.Playground.Player.GetDamage();
+                Game.Playground.Player.PingOnDamage(60);
+                Game.Enemies.Remove(enemy);
             }
         }
 
         private void EndGame()
         {
-            if (Game.Playground.Player.Health <= 0)
-            {
-                Game.Stop();
-                ScreenManager.CloseGameForm();
-                ScreenManager.ShowStartForm();
-            }
+            if (Game.Playground.Player.Health > 0) return;
+
+            Game.Stop();
+            ScreenManager.CloseGameForm();
+            ScreenManager.ShowStartForm();
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
 
-            if (e.KeyCode == Keys.Space && GameScale.BlankAmount > 0)
-            {
-                Game.RomveAllEnemies();
-                GameScale.BlankAmount--;
-            }
+            if (e.KeyCode != Keys.Space || GameScale.BlankAmount <= 0) return;
+
+            Game.RemoveAllEnemies();
+            GameScale.BlankAmount--;
         }
     }   
 }

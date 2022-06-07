@@ -27,6 +27,12 @@ namespace DodgeOrDie.Views
             Load += (s, e) => OnSizeChanged(EventArgs.Empty);
         }
 
+        public sealed override Color BackColor
+        {
+            get => base.BackColor;
+            set => base.BackColor = value;
+        }
+
         public void InitControls()
         {
             InitResumeButton();

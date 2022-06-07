@@ -2,7 +2,7 @@
 
 namespace DodgeOrDie
 {
-    partial class GameForm
+    sealed partial class GameForm
     {
         private System.ComponentModel.IContainer components = null;
 

@@ -67,7 +67,7 @@ namespace DodgeOrDie.Models
             _maxEnemies = count;
         }
 
-        public void RomveAllEnemies()
+        public void RemoveAllEnemies()
         {
             Enemies.Clear();
         }

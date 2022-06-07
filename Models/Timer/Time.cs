@@ -7,10 +7,7 @@ namespace DodgeOrDie.Models.Timer
     {
         public Size Size { get; set; }
         public Point StartPos { get; set; }
-        public Point EndPos
-        {
-            get => new Point((int)StartPos.X + Size.Width, (int)StartPos.Y + Size.Height);
-        }
+        public Point EndPos => new Point((int)StartPos.X + Size.Width, (int)StartPos.Y + Size.Height);
         public Brush Brush { get; set; }
         public Rectangle Rectangle { get; set; }
 

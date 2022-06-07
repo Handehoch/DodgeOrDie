@@ -11,16 +11,13 @@ namespace DodgeOrDie.Models.Timer
         public Pen Pen { get; set; }
         public Size Size { get; set; }
         public Point StartPos { get; set; }
-        public Point EndPos 
-        { 
-            get => new Point(StartPos.X + Size.Width, StartPos.Y + Size.Height); 
-        }
+        public Point EndPos => new Point(StartPos.X + Size.Width, StartPos.Y + Size.Height);
         public Rectangle Rectangle { get; set; }
         public Font Font { get; private set; }
         public Time Time { get; private set; }
 
         private readonly PrivateFontCollection _fc;
-        public Watch(Pen pen, /*Font font,*/ int width, int height, int x, int y)
+        public Watch(Pen pen, int width, int height, int x, int y)
         {
             Pen = pen;
             Time = new Time(Size.Width, Size.Height, StartPos.X, StartPos.Y);

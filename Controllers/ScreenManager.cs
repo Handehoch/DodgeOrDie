@@ -23,7 +23,7 @@ namespace DodgeOrDie.Controllers
         public static void CreateGame()
         {
             PlayerMovement.Clear();
-            GameScale.RestoreToDeafult();
+            GameScale.RestoreToDefault();
             _gameForm = new GameForm();
             _gameForm?.Show();
         }

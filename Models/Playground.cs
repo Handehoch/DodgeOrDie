@@ -9,10 +9,7 @@ namespace DodgeOrDie.Models
         public Pen Pen { get; set; }
         public Size Size { get; set; }
         public Point StartPos { get; set; }
-        public Point EndPos
-        {
-            get => new Point(StartPos.X + Size.Width, StartPos.Y + Size.Height);
-        }
+        public Point EndPos => new Point(StartPos.X + Size.Width, StartPos.Y + Size.Height);
         public Rectangle Rectangle { get; set; }
 
         private const double Scale = 0.6;

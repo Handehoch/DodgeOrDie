@@ -10,26 +10,13 @@ namespace DodgeOrDie.Helpers
             return point.X >= 0 && point.Y >= 0 && point.X < width && point.Y < height;
         }
 
-        public static bool InteractsWith(this Player entity, IEnemy other) /*where T : Character, IEnemy*/
+        public static bool InteractsWith(this Player entity, IEnemy other) 
         {
-            //if(entity is Character)
-            //{
-                var character = entity as Player;
-                return character.X <= other.X + other.Size.Width 
-                    && character.X + character.Size >= other.X
-                    && character.Y <= other.Y + other.Size.Height
-                    && character.Y + character.Size >= other.Y;
-            //}
-            //else if(entity is IEnemy)
-            //{
-            //    var enemy = entity as IEnemy;
-            //    return enemy.X < other.X + other.Size.Width
-            //        && enemy.X + enemy.Size.Width < other.X
-            //        && enemy.Y > other.Y + other.Size.Height
-            //        && enemy.Y + enemy.Size.Height < other.Y;
-            //}
-
-            //return false;
+            var character = entity as Player;
+            return character.X <= other.X + other.Size.Width 
+                && character.X + character.Size >= other.X
+                && character.Y <= other.Y + other.Size.Height
+                && character.Y + character.Size >= other.Y;
         }
     }
 }

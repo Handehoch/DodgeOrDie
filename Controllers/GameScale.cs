@@ -31,7 +31,7 @@ namespace DodgeOrDie.Controllers
             };
         }
 
-        public static void RestoreToDeafult()
+        public static void RestoreToDefault()
         {
             MaxEnemies = 10;
             EnemySpeed = 10;
