@@ -49,7 +49,7 @@ namespace DodgeOrDie.Controllers
             EnemySpeed += 1;
 
             if(SpawnRate > 100)
-                SpawnRate -= 15;
+                SpawnRate -= 25;
         }
     }
 
