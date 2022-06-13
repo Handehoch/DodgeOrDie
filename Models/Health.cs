@@ -15,7 +15,7 @@ namespace DodgeOrDie.Models
         public Health(int x, int y)
         {
             Size = new Size(30, 26);
-            Sprite = new Bitmap(@"..\..\..\DodgeOrDie\Sprites\whiteLargeHeart.png");
+            Sprite = Properties.Resources.whiteLargeHeart;
             Update(0, 0, x, y);
         }
 

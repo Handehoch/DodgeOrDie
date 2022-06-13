@@ -28,7 +28,7 @@ namespace DodgeOrDie.Models
             _maxEnemies = maxEnemies;
             Enemies = new List<IEnemy>();
 
-            _player = new SoundPlayer(@"..\..\..\DodgeOrDie\Sprites\battle.wav");
+            _player = new SoundPlayer(Properties.Resources.battle);
 
             DifficultyController = new System.Windows.Forms.Timer() { Interval = 30 * 1000, };
             EnemySpawner = new System.Windows.Forms.Timer() { Interval = spawnRate, };

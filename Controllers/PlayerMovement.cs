@@ -28,7 +28,10 @@ namespace DodgeOrDie.Controllers
 
         private static bool IsValidKey(Keys key)
         {
-            return key == System.Windows.Forms.Keys.W || key == System.Windows.Forms.Keys.S || key == System.Windows.Forms.Keys.A || key == System.Windows.Forms.Keys.D;
+            return key == System.Windows.Forms.Keys.W 
+                   || key == System.Windows.Forms.Keys.S 
+                   || key == System.Windows.Forms.Keys.A 
+                   || key == System.Windows.Forms.Keys.D;
         }
 
         public static Vector GetDirection(Player character, bool isInverted)

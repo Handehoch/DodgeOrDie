@@ -15,7 +15,7 @@ namespace DodgeOrDie.Models.Enemies
         public RushingEnemy()
         {
             Size = new Size(56, 45);
-            Sprite = new Bitmap(@"..\..\..\DodgeOrDie\Sprites\rushingEnemy.png");
+            Sprite = Properties.Resources.rushingEnemy;
         }
 
         public void Move(int speed)
